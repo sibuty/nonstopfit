@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+
+  compileSdkVersion 25
+  buildToolsVersion "$versions.BUILD_TOOLS"
+  defaultConfig {
+    applicationId "ru.digitalwand.nonstopfit.nonstopfit"
+    minSdkVersion 21
+    targetSdkVersion 25
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+}
+
+dependencies {
+  //libs
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  //android
+  compile "com.android.support:appcompat-v7:$versions.ANDROID_SUPPORT"
+  compile "com.jakewharton.butterknife:$versions.BUTTER_KNIFE"
+  annotationProcessor  "com.jakewharton:butterknife-compiler:$versions.BUTTER_KNIFE"
+  compile "frankiesardo:icepick:$versions.ICE_PICK"
+  provided "frankiesardo:icepick-processor:$versions.ICE_PICK"
+
+  //rest
+  compile "com.squareup.retrofit2:retrofit:$versions.RETROFIT"
+  compile "com.squareup.okhttp3:logging-interceptor:$versions.OK_HTTP_LOGGING"
+
+  //concurrency
+  compile "io.reactivex:rxjava:$versions.RX_ANDROID"
+  compile "io.reactivex:android:$versions.RX_JAVA"
+
+  //dependency_injections
+  compile "com.google.dagger:dagger:$versions.DAGGER"
+  annotationProcessor  "com.google.dagger:dagger-compiler:$versions.DAGGER"
+
+  //test
+  testCompile 'junit:junit:4.12'
+}
