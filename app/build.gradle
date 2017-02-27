@@ -34,18 +34,18 @@ dependencies {
 
   //android
   compile "com.android.support:appcompat-v7:$versions.ANDROID_SUPPORT"
-  compile "com.jakewharton.butterknife:$versions.BUTTER_KNIFE"
+  compile "com.jakewharton:butterknife:$versions.BUTTER_KNIFE"
   annotationProcessor  "com.jakewharton:butterknife-compiler:$versions.BUTTER_KNIFE"
   compile "frankiesardo:icepick:$versions.ICE_PICK"
   provided "frankiesardo:icepick-processor:$versions.ICE_PICK"
 
   //rest
   compile "com.squareup.retrofit2:retrofit:$versions.RETROFIT"
-  compile "com.squareup.okhttp3:logging-interceptor:$versions.OK_HTTP_LOGGING"
+  compile "com.squareup.okhttp:logging-interceptor:$versions.OK_HTTP_LOGGING"
 
   //concurrency
-  compile "io.reactivex:rxjava:$versions.RX_ANDROID"
-  compile "io.reactivex:android:$versions.RX_JAVA"
+  compile "io.reactivex:rxjava:$versions.RX_JAVA"
+  compile "io.reactivex:rxandroid:$versions.RX_ANDROID"
 
   //dependency_injections
   compile "com.google.dagger:dagger:$versions.DAGGER"

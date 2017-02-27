@@ -18,6 +18,8 @@ allprojects {
   repositories {
     jcenter()
     mavenCentral()
+    mavenLocal()
+    maven {url "https://clojars.org/repo/"}
   }
 }
 
@@ -30,7 +32,7 @@ ext.versions = [COMPILE_SDK    : 24,
                 TARGET_SDK     : 24,
                 ICE_PICK       : "3.2.0",
                 BUILD_TOOLS    : "25.0.1",
-                ANDROID_SUPPORT: "25.0.1",
+                ANDROID_SUPPORT: "25.2.0",
                 BUTTER_KNIFE   : "8.5.1",
                 RETROFIT       : "2.0.0",
                 OK_HTTP        : "2.10.x",
