@@ -1,3 +1,8 @@
 <resources>
   <string name="app_name">Nonstopfit</string>
+
+  <string name="error_response_is_null">Пустой ответ с сервера</string>
+  <string name="hint_login">Имя</string>
+  <string name="hint_password">Пароль</string>
+  <string name="button_enter">Войти</string>
 </resources>

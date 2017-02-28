@@ -19,7 +19,8 @@ allprojects {
     jcenter()
     mavenCentral()
     mavenLocal()
-    maven {url "https://clojars.org/repo/"}
+    maven { url "https://clojars.org/repo/" }
+    maven { url "http://repository.codehaus.org/org/codehaus" }
   }
 }
 
@@ -27,20 +28,24 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
-ext.versions = [COMPILE_SDK    : 24,
-                MIN_SDK        : 15,
-                TARGET_SDK     : 24,
-                ICE_PICK       : "3.2.0",
-                BUILD_TOOLS    : "25.0.1",
-                ANDROID_SUPPORT: "25.2.0",
-                BUTTER_KNIFE   : "8.5.1",
-                RETROFIT       : "2.0.0",
-                OK_HTTP        : "2.10.x",
-                OK_HTTP_LOGGING: "2.7.5",
-                DAGGER         : "2.9",
-                GLIDE          : "3.7.0",
-                RX_ANDROID     : "1.2.1",
-                RX_JAVA        : "1.2.7",
-                JUNIT          : "4.12",
-                LEAK_CANARY    : "1.4"]
+ext.versions = [COMPILE_SDK      : 24,
+                MIN_SDK          : 15,
+                TARGET_SDK       : 24,
+                ICE_PICK         : "3.2.0",
+                BUILD_TOOLS      : "25.0.1",
+                ANDROID_SUPPORT  : "24.2.1",
+                BUTTER_KNIFE     : "8.5.1",
+                RETROFIT         : "2.0.0",
+                OK_HTTP          : "2.10.x",
+                OK_HTTP_LOGGING  : "3.6.0",
+                JACKSON_CONVERTER: "2.2.0",
+                JACKSON          : "2.8.7",
+                JACKSON_DATABIND : "2.4.3",
+                DAGGER           : "2.9",
+                GLIDE            : "3.7.0",
+                RX_ADAPTER       : "2.0.2",
+                RX_ANDROID       : "1.2.1",
+                RX_JAVA          : "1.2.7",
+                JUNIT            : "4.12",
+                LEAK_CANARY      : "1.4"]
 

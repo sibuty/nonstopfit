@@ -15,7 +15,11 @@ android {
   }
 
   buildTypes {
+    debug {
+      buildConfigField "String", "SERVER_URL", "\"ANY_URL\""
+    }
     release {
+      buildConfigField "String", "SERVER_URL", "\"ANY_URL\""
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
@@ -26,6 +30,18 @@ android {
     targetCompatibility JavaVersion.VERSION_1_8
   }
 
+  packagingOptions {
+    exclude 'META-INF/DEPENDENCIES.txt'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/NOTICE.txt'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/notice.txt'
+    exclude 'META-INF/license.txt'
+    exclude 'META-INF/dependencies.txt'
+    exclude 'META-INF/LGPL2.1'
+  }
 }
 
 dependencies {
@@ -34,14 +50,21 @@ dependencies {
 
   //android
   compile "com.android.support:appcompat-v7:$versions.ANDROID_SUPPORT"
+  compile "com.android.support:design:$versions.ANDROID_SUPPORT"
   compile "com.jakewharton:butterknife:$versions.BUTTER_KNIFE"
-  annotationProcessor  "com.jakewharton:butterknife-compiler:$versions.BUTTER_KNIFE"
+  annotationProcessor "com.jakewharton:butterknife-compiler:$versions.BUTTER_KNIFE"
   compile "frankiesardo:icepick:$versions.ICE_PICK"
   provided "frankiesardo:icepick-processor:$versions.ICE_PICK"
 
   //rest
   compile "com.squareup.retrofit2:retrofit:$versions.RETROFIT"
-  compile "com.squareup.okhttp:logging-interceptor:$versions.OK_HTTP_LOGGING"
+  compile "com.squareup.okhttp3:logging-interceptor:$versions.OK_HTTP_LOGGING"
+
+  //data
+  compile "com.fasterxml.jackson.core:jackson-core:$versions.JACKSON"
+  compile "com.fasterxml.jackson.core:jackson-databind:$versions.JACKSON_DATABIND"
+  compile "com.squareup.retrofit2:adapter-rxjava:$versions.RX_ADAPTER"
+  compile "com.squareup.retrofit2:converter-jackson:$versions.JACKSON_CONVERTER"
 
   //concurrency
   compile "io.reactivex:rxjava:$versions.RX_JAVA"
@@ -49,7 +72,7 @@ dependencies {
 
   //dependency_injections
   compile "com.google.dagger:dagger:$versions.DAGGER"
-  annotationProcessor  "com.google.dagger:dagger-compiler:$versions.DAGGER"
+  annotationProcessor "com.google.dagger:dagger-compiler:$versions.DAGGER"
 
   //test
   testCompile 'junit:junit:4.12'
