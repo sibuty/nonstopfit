@@ -74,6 +74,10 @@ dependencies {
   compile "com.google.dagger:dagger:$versions.DAGGER"
   annotationProcessor "com.google.dagger:dagger-compiler:$versions.DAGGER"
 
+  //tools
+  compile "com.google.guava:guava:$versions.GUAVA"
+  compile "org.apache.commons:commons-lang3:$versions.COMMAND_LANG3"
+
   //test
   testCompile 'junit:junit:4.12'
 }

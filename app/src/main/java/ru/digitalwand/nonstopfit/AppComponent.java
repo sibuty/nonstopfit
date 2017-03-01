@@ -9,13 +9,18 @@ package ru.digitalwand.nonstopfit;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.module.NetworkModule;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
+import ru.digitalwand.nonstopfit.data.wrapper.module.LoginWrapperModule;
+import ru.digitalwand.nonstopfit.ui.login.LoginActivity;
+import ru.digitalwand.nonstopfit.ui.login.LoginPresenter;
 
 @Singleton
-@Component(modules = { AppModule.class, NetworkModule.class })
+@Component(modules = { AppModule.class, NetworkModule.class, LoginWrapperModule.class})
 public interface AppComponent {
 
   void inject(LoginWrapper loginWrapper);
+
 
 }

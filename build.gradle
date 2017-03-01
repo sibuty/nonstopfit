@@ -46,6 +46,8 @@ ext.versions = [COMPILE_SDK      : 24,
                 RX_ADAPTER       : "2.0.2",
                 RX_ANDROID       : "1.2.1",
                 RX_JAVA          : "1.2.7",
+                GUAVA            : "18.0",
+                COMMAND_LANG3    : "3.5",
                 JUNIT            : "4.12",
                 LEAK_CANARY      : "1.4"]
 

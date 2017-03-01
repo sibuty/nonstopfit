@@ -14,6 +14,7 @@ import ru.digitalwand.nonstopfit.data.entity.SignResponse;
 import ru.digitalwand.nonstopfit.data.entity.User;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
 import rx.Observable;
+import rx.Scheduler;
 
 /**
  * Created by Igor Goryainov

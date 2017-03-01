@@ -15,4 +15,9 @@ public class Login {
   //пароль пользователя
   @JsonProperty("password")
   public String password;
+
+  public Login(final String userName, final String password) {
+    this.userName = userName;
+    this.password = password;
+  }
 }
