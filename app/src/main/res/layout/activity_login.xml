@@ -70,4 +70,36 @@
 
   </LinearLayout>
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:divider="@drawable/empty_divider_10dp"
+      android:orientation="horizontal"
+      android:padding="10dp"
+      android:showDividers="middle"
+      >
+
+    <Button
+        android:id="@+id/b_sign_up"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="@string/button_sign_up"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
+    <Button
+        android:id="@+id/b_reset_password"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="@string/button_rest_password"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
+  </LinearLayout>
+
 </RelativeLayout>

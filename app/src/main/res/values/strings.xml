@@ -6,4 +6,6 @@
   <string name="hint_password">Пароль</string>
   <string name="button_enter">Войти</string>
   <string name="error_field_is_empty">Заполните поле</string>
+  <string name="button_sign_up">Регистрация</string>
+  <string name="button_rest_password">Забыли пароль?</string>
 </resources>
