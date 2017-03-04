@@ -5,7 +5,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ru.digitalwand.nonstopfit.App;
-import ru.digitalwand.nonstopfit.di.module.provider.NetworkProviderModule;
 
 /**
  * Created by Igor Goryainov

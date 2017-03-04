@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
-import ru.digitalwand.nonstopfit.ui.BasePresenter;
-import ru.digitalwand.nonstopfit.ui.BaseView;
+import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;
 
 /**
  * Created by Igor Goryainov
@@ -14,17 +13,15 @@ import ru.digitalwand.nonstopfit.ui.BaseView;
  */
 public interface LoginContract {
 
-  interface View extends BaseView<Presenter> {
+  interface View<T> extends BaseView<T> {
     void loginSuccess(@NonNull LoginResponse loginResponse);
 
     void loginIsEmpty();
 
     void passwordIsEmpty();
-
-    void loginError(@NonNull String message);
   }
 
-  interface Presenter extends BasePresenter {
+  interface Presenter {
     void setLogin(@NonNull Login login);
 
     void login();

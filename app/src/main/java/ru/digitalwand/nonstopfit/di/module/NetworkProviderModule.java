@@ -1,4 +1,4 @@
-package ru.digitalwand.nonstopfit.di.module.provider;
+package ru.digitalwand.nonstopfit.di.module;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

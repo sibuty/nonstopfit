@@ -11,17 +11,17 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
-import ru.digitalwand.nonstopfit.di.component.login.LoginPresenterComponent;
+import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.di.module.AppModule;
-import ru.digitalwand.nonstopfit.di.module.login.LoginWrapperModule;
+import ru.digitalwand.nonstopfit.di.module.LoginWrapperModule;
 
 @Singleton
-@Component(modules = AppModule.class)
+@Component(modules = { AppModule.class, LoginWrapperModule.class })
 public interface AppComponent {
 
   App app();
 
   NetworkProvider networkProvider();
 
-  LoginPresenterComponent pluse(LoginWrapperModule module);
+  LoginWrapper loginWrapper();
 }

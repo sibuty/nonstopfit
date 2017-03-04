@@ -3,10 +3,11 @@ package ru.digitalwand.nonstopfit;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
-import ru.digitalwand.nonstopfit.di.component.DaggerAppComponent;
-import ru.digitalwand.nonstopfit.di.module.provider.NetworkProviderModule;
 import ru.digitalwand.nonstopfit.di.component.AppComponent;
+import ru.digitalwand.nonstopfit.di.component.DaggerAppComponent;
 import ru.digitalwand.nonstopfit.di.module.AppModule;
+import ru.digitalwand.nonstopfit.di.module.LoginWrapperModule;
+import ru.digitalwand.nonstopfit.di.module.NetworkProviderModule;
 
 /**
  * Created by Igor Goryainov
@@ -32,6 +33,7 @@ public class App extends Application {
     return DaggerAppComponent.builder()
         .appModule(new AppModule(this))
         .networkProviderModule(new NetworkProviderModule(BuildConfig.SERVER_URL))
+        .loginWrapperModule(new LoginWrapperModule())
         .build();
   }
 }

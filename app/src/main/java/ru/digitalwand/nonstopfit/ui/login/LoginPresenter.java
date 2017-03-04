@@ -5,14 +5,10 @@ import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.inject.Inject;
-
-import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
-import ru.digitalwand.nonstopfit.di.module.login.LoginWrapperModule;
+import ru.digitalwand.nonstopfit.ui.base.mvp.BasePresenter;
 import ru.digitalwand.nonstopfit.util.RxBackgoroundWrapper;
-import rx.subscriptions.CompositeSubscription;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -21,42 +17,28 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * skype - glotemz
  * on 01.03.2017 20:09.
  */
-public class LoginPresenter implements LoginContract.Presenter {
+public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Login>>
+    implements LoginContract.Presenter {
 
   @NonNull
-  private final LoginContract.View loginView;
-  @Inject
-  protected LoginWrapper loginWrapper;
-  @NonNull
-  private CompositeSubscription subscriptions;
+  private final LoginWrapper loginWrapper;
   @Nullable
   private Login login;
 
-  public LoginPresenter(@NonNull final LoginContract.View loginView) {
-    this.loginView = loginView;
-    this.subscriptions = new CompositeSubscription();
-    App.getAppComponent().pluse(new LoginWrapperModule()).inject(this);
+  public LoginPresenter(@NonNull final LoginWrapper loginWrapper) {
+    this.loginWrapper = loginWrapper;
   }
 
   @Override
   public void login() {
+    checkNotNull(login);
     if (verifyLogin(login)) {
-      subscriptions.add(RxBackgoroundWrapper.doInBackground(loginWrapper.login(login))
-                            .subscribe(loginView::loginSuccess, throwable -> {
-                              throwable.printStackTrace();
-                              loginView.loginError(throwable.getMessage());
-                            }));
+      addSubscription(RxBackgoroundWrapper.doInBackground(loginWrapper.login(login))
+                          .subscribe(view::loginSuccess, throwable -> {
+                            throwable.printStackTrace();
+                            view.showError(throwable.getMessage());
+                          }));
     }
-  }
-
-  @Override
-  public void subscribe() {
-    login();
-  }
-
-  @Override
-  public void unsubscribe() {
-    subscriptions.clear();
   }
 
   @Override
@@ -65,14 +47,13 @@ public class LoginPresenter implements LoginContract.Presenter {
     this.login = login;
   }
 
-  public boolean verifyLogin(@NonNull final Login login) {
-    checkNotNull(login);
+  private boolean verifyLogin(@NonNull final Login login) {
     if (StringUtils.isEmpty(login.userName)) {
-      loginView.loginIsEmpty();
+      view.loginIsEmpty();
       return false;
     }
     if (StringUtils.isEmpty(login.password)) {
-      loginView.passwordIsEmpty();
+      view.passwordIsEmpty();
       return false;
     }
     return true;

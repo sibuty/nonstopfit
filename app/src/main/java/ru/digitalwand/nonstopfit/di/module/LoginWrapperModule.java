@@ -1,11 +1,12 @@
-package ru.digitalwand.nonstopfit.di.module.login;
+package ru.digitalwand.nonstopfit.di.module;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
-import ru.digitalwand.nonstopfit.di.scope.Login;
 
 /**
  * Created by Igor Goryainov
@@ -16,7 +17,7 @@ import ru.digitalwand.nonstopfit.di.scope.Login;
 public class LoginWrapperModule {
 
   @Provides
-  @Login
+  @Singleton
   LoginWrapper provideLoginWrapper(App app, NetworkProvider networkProvider) {
     return new LoginWrapper(app, networkProvider);
   }
