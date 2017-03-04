@@ -17,12 +17,12 @@ public class RxBackgoroundWrapper {
 
   public static <T> Subscription doInBackground(@NonNull Observable<T> observable,
                                                 @NonNull Subscriber<T> subscriber) {
-    return observable.observeOn(Schedulers.io())
-        .subscribeOn(AndroidSchedulers.mainThread())
+    return observable.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(subscriber);
   }
 
   public static <T> Observable<T> doInBackground(@NonNull Observable<T> observable) {
-    return observable.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread());
+    return observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
   }
 }

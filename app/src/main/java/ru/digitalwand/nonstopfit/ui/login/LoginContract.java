@@ -16,11 +16,17 @@ public interface LoginContract {
 
   interface View extends BaseView<Presenter> {
     void loginSuccess(@NonNull LoginResponse loginResponse);
+
+    void loginIsEmpty();
+
+    void passwordIsEmpty();
+
     void loginError(@NonNull String message);
   }
 
   interface Presenter extends BasePresenter {
     void setLogin(@NonNull Login login);
+
     void login();
   }
 }

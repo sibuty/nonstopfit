@@ -3,10 +3,14 @@ package ru.digitalwand.nonstopfit.ui.login;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.inject.Inject;
 
+import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
+import ru.digitalwand.nonstopfit.di.module.login.LoginWrapperModule;
 import ru.digitalwand.nonstopfit.util.RxBackgoroundWrapper;
 import rx.subscriptions.CompositeSubscription;
 
@@ -31,15 +35,18 @@ public class LoginPresenter implements LoginContract.Presenter {
   public LoginPresenter(@NonNull final LoginContract.View loginView) {
     this.loginView = loginView;
     this.subscriptions = new CompositeSubscription();
+    App.getAppComponent().pluse(new LoginWrapperModule()).inject(this);
   }
 
   @Override
   public void login() {
-    subscriptions.add(RxBackgoroundWrapper.doInBackground(loginWrapper.login(login))
-                          .subscribe(loginView::loginSuccess, throwable -> {
-                            throwable.printStackTrace();
-                            loginView.loginError(throwable.getMessage());
-                          }));
+    if (verifyLogin(login)) {
+      subscriptions.add(RxBackgoroundWrapper.doInBackground(loginWrapper.login(login))
+                            .subscribe(loginView::loginSuccess, throwable -> {
+                              throwable.printStackTrace();
+                              loginView.loginError(throwable.getMessage());
+                            }));
+    }
   }
 
   @Override
@@ -56,5 +63,18 @@ public class LoginPresenter implements LoginContract.Presenter {
   public void setLogin(@NonNull final Login login) {
     checkNotNull(login);
     this.login = login;
+  }
+
+  public boolean verifyLogin(@NonNull final Login login) {
+    checkNotNull(login);
+    if (StringUtils.isEmpty(login.userName)) {
+      loginView.loginIsEmpty();
+      return false;
+    }
+    if (StringUtils.isEmpty(login.password)) {
+      loginView.passwordIsEmpty();
+      return false;
+    }
+    return true;
   }
 }

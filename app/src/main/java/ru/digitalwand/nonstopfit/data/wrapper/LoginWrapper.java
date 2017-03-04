@@ -2,8 +2,6 @@ package ru.digitalwand.nonstopfit.data.wrapper;
 
 import android.support.annotation.StringRes;
 
-import javax.inject.Inject;
-
 import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.R;
 import ru.digitalwand.nonstopfit.data.entity.Login;
@@ -14,7 +12,6 @@ import ru.digitalwand.nonstopfit.data.entity.SignResponse;
 import ru.digitalwand.nonstopfit.data.entity.User;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
 import rx.Observable;
-import rx.Scheduler;
 
 /**
  * Created by Igor Goryainov
@@ -23,12 +20,12 @@ import rx.Scheduler;
  */
 public class LoginWrapper {
 
-  @Inject
   protected NetworkProvider networkProvider;
   protected App app;
 
-  public LoginWrapper(App app) {
+  public LoginWrapper(App app, NetworkProvider networkProvider) {
     this.app = app;
+    this.networkProvider = networkProvider;
   }
 
   public Observable<SignResponse> signUp(Sign sign) {

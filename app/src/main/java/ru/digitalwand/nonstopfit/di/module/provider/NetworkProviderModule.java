@@ -1,6 +1,4 @@
-package ru.digitalwand.nonstopfit.data.module;
-
-import android.app.Application;
+package ru.digitalwand.nonstopfit.di.module.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
@@ -26,19 +25,19 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
  * on 28.02.2017 20:32.
  */
 @Module
-public class NetworkModule {
+public class NetworkProviderModule {
 
   private final String baseUrl;
 
-  public NetworkModule(final String baseUrl) {
+  public NetworkProviderModule(final String baseUrl) {
     this.baseUrl = baseUrl;
   }
 
   @Provides
   @Singleton
-  Cache provideHttpCache(final Application application) {
+  Cache provideHttpCache(final App app) {
     final long cacheSize = 10L * 1024L * 1024L;
-    return new Cache(application.getCacheDir(), cacheSize);
+    return new Cache(app.getCacheDir(), cacheSize);
   }
 
   @Provides

@@ -1,5 +1,6 @@
 package ru.digitalwand.nonstopfit.data.provider;
 
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
@@ -17,11 +18,11 @@ import rx.Observable;
 public interface NetworkProvider {
 
   @POST("/api/sign-up/")
-  Observable<SignResponse> signUp(Sign sign);
+  Observable<SignResponse> signUp(@Body Sign sign);
 
   @POST("/api/login/")
-  Observable<LoginResponse> login(Login login);
+  Observable<LoginResponse> login(@Body Login login);
 
   @POST("/api/reset-password/")
-  Observable<ResetPasswordResponse> resetPassword(User user);
+  Observable<ResetPasswordResponse> resetPassword(@Body User user);
 }

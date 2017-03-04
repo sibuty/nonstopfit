@@ -16,10 +16,10 @@ android {
 
   buildTypes {
     debug {
-      buildConfigField "String", "SERVER_URL", "\"ANY_URL\""
+      buildConfigField "String", "SERVER_URL", "\"https://www.google.ru\""
     }
     release {
-      buildConfigField "String", "SERVER_URL", "\"ANY_URL\""
+      buildConfigField "String", "SERVER_URL", "\"https://www.google.ru\""
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }

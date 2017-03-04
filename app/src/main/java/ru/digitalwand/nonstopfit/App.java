@@ -3,9 +3,10 @@ package ru.digitalwand.nonstopfit;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
-import ru.digitalwand.nonstopfit.data.module.NetworkModule;
-import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
-import ru.digitalwand.nonstopfit.data.wrapper.module.LoginWrapperModule;
+import ru.digitalwand.nonstopfit.di.component.DaggerAppComponent;
+import ru.digitalwand.nonstopfit.di.module.provider.NetworkProviderModule;
+import ru.digitalwand.nonstopfit.di.component.AppComponent;
+import ru.digitalwand.nonstopfit.di.module.AppModule;
 
 /**
  * Created by Igor Goryainov
@@ -14,20 +15,23 @@ import ru.digitalwand.nonstopfit.data.wrapper.module.LoginWrapperModule;
  */
 public class App extends Application {
 
-  private AppComponent appComponent;
+  private static AppComponent appComponent;
+
+  @NonNull
+  public static AppComponent getAppComponent() {
+    return appComponent;
+  }
 
   @Override
   public void onCreate() {
     super.onCreate();
-    appComponent = DaggerAppComponent.builder()
-        .appModule(new AppModule(this))
-        .networkModule(new NetworkModule(BuildConfig.SERVER_URL))
-        .loginWrapperModule(new LoginWrapperModule())
-        .build();
+    appComponent = buildComponent();
   }
 
-  @NonNull
-  public AppComponent getAppComponent() {
-    return appComponent;
+  protected AppComponent buildComponent() {
+    return DaggerAppComponent.builder()
+        .appModule(new AppModule(this))
+        .networkProviderModule(new NetworkProviderModule(BuildConfig.SERVER_URL))
+        .build();
   }
 }

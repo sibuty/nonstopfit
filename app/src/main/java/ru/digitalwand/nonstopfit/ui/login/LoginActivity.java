@@ -5,20 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import ru.digitalwand.nonstopfit.R;
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
-import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 
 /**
  * Created by Igor Goryainov
@@ -57,6 +54,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
   }
 
   @Override
+  public void loginIsEmpty() {
+    tilLogin.setError(getString(R.string.error_field_is_empty));
+  }
+
+  @Override
+  public void passwordIsEmpty() {
+    tilPassword.setError(getString(R.string.error_field_is_empty));
+  }
+
+  @Override
   public void loginError(@NonNull final String message) {
     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
   }
@@ -68,25 +75,21 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
   @OnClick(R.id.b_enter)
   protected void onLoginClick() {
-    final Login login = getLogin();
-    if (login != null) {
-      presenter.setLogin(login);
-      presenter.subscribe();
-    }
+    presenter.setLogin(getLogin());
+    presenter.subscribe();
   }
 
-  @Nullable
+  @OnEditorAction(R.id.et_password)
+  protected boolean onDoneAction(int actionId) {
+    if(actionId == EditorInfo.IME_ACTION_DONE) {
+      onLoginClick();
+      return true;
+    }
+    return false;
+  }
+
+  @NonNull
   protected Login getLogin() {
-    final String login = etLogin.getText().toString();
-    if (StringUtils.isBlank(login)) {
-      tilLogin.setError(getString(R.string.error_field_is_empty));
-      return null;
-    }
-    final String password = etPassword.getText().toString();
-    if (StringUtils.isBlank(password)) {
-      tilPassword.setError(getString(R.string.error_field_is_empty));
-      return null;
-    }
-    return new Login(login, password);
+    return new Login(etLogin.getText().toString(), etPassword.getText().toString());
   }
 }
