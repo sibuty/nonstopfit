@@ -25,7 +25,8 @@ import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
 import ru.digitalwand.nonstopfit.di.component.LoginActivityComponent;
 import ru.digitalwand.nonstopfit.di.module.LoginPresenterModule;
 import ru.digitalwand.nonstopfit.ui.base.HasComponentBaseActivity;
-import ru.digitalwand.nonstopfit.ui.sign.SignActivity;
+import ru.digitalwand.nonstopfit.ui.login.reset.ResetActivity;
+import ru.digitalwand.nonstopfit.ui.login.sign.SignActivity;
 
 /**
  * Created by Igor Goryainov
@@ -36,6 +37,7 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
     implements LoginContract.View<Login> {
 
   protected static final int REQUEST_CODE_OPEN_SIGN_UP = 100;
+  protected static final int REQUEST_CODE_OPEN_RESET = 101;
 
   @BindView(R.id.til_login)
   protected TextInputLayout tilLogin;
@@ -139,6 +141,12 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
     startActivityForResult(intent, REQUEST_CODE_OPEN_SIGN_UP);
   }
 
+  @OnClick(R.id.b_reset_password)
+  protected void onResetPasswordClick() {
+    Intent intent = new Intent(this, ResetActivity.class);
+    startActivityForResult(intent, REQUEST_CODE_OPEN_SIGN_UP);
+  }
+
   @OnEditorAction(R.id.et_password)
   protected boolean onDoneAction(int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -149,14 +157,14 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   }
 
   @OnTextChanged(value = R.id.et_login, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-  protected void onLoginChaged(final Editable editable) {
+  protected void onLoginChanged(final Editable editable) {
     if (StringUtils.isNoneEmpty(editable)) {
       tilLogin.setError(null);
     }
   }
 
   @OnTextChanged(value = R.id.et_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-  protected void onPasswordChaged(final Editable editable) {
+  protected void onPasswordChanged(final Editable editable) {
     if (StringUtils.isNoneEmpty(editable)) {
       tilPassword.setError(null);
     }

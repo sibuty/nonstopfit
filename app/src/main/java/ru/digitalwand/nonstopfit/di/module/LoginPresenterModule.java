@@ -3,7 +3,7 @@ package ru.digitalwand.nonstopfit.di.module;
 import dagger.Module;
 import dagger.Provides;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
-import ru.digitalwand.nonstopfit.di.scope.Login;
+import ru.digitalwand.nonstopfit.di.scope.login.Login;
 import ru.digitalwand.nonstopfit.ui.login.LoginPresenter;
 
 /**

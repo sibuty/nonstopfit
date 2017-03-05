@@ -1,11 +1,10 @@
-package ru.digitalwand.nonstopfit.ui.sign;
+package ru.digitalwand.nonstopfit.ui.login.sign;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -73,11 +72,7 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   protected void initToolbar() {
     getToolbar().setTitle(R.string.title_sign_up);
     super.initToolbar();
-    final ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-      actionBar.setDisplayShowHomeEnabled(true);
-    }
+    setDisplayHome(true);
   }
 
   @Override
@@ -169,7 +164,7 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   }
 
   @OnTextChanged(value = R.id.et_login, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-  protected void onLoginChaged(final Editable editable) {
+  protected void onLoginChanged(final Editable editable) {
     if (StringUtils.isNoneEmpty(editable)) {
       tilLogin.setError(null);
     }
@@ -177,7 +172,7 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
 
   @OnTextChanged(value = { R.id.et_password, R.id.et_confirm_password },
       callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-  protected void onPasswordChaged(final Editable editable) {
+  protected void onPasswordChanged(final Editable editable) {
     if (StringUtils.isNoneEmpty(editable)) {
       tilPassword.setError(null);
       tilConfirmPassword.setError(null);
@@ -185,7 +180,7 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   }
 
   @OnTextChanged(value = { R.id.et_email }, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-  protected void onEmailChaged(final Editable editable) {
+  protected void onEmailChanged(final Editable editable) {
     if (StringUtils.isNoneEmpty(editable)) {
       tilEmail.setError(null);
     }

@@ -3,6 +3,7 @@ package ru.digitalwand.nonstopfit.ui.base;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -59,5 +60,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   protected void initToolbar() {
     setSupportActionBar(toolbar);
+  }
+
+  protected void setDisplayHome(boolean enable) {
+    if (!enable) {
+      return;
+    }
+    final ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(enable);
+      actionBar.setDisplayShowHomeEnabled(enable);
+    }
   }
 }

@@ -1,4 +1,4 @@
-package ru.digitalwand.nonstopfit.ui.sign;
+package ru.digitalwand.nonstopfit.ui.login.sign;
 
 import android.support.annotation.NonNull;
 
@@ -38,7 +38,8 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     }
   }
 
-  private boolean verify(@NonNull final Sign sign, @NonNull final SignContract.View view) {
+  @Override
+  protected boolean verify(@NonNull final Sign sign, @NonNull final SignContract.View view) {
     boolean result = true;
     if (StringUtils.isEmpty(sign.userName)) {
       view.loginIsEmpty();

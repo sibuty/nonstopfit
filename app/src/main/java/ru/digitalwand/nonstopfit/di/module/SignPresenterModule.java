@@ -3,8 +3,8 @@ package ru.digitalwand.nonstopfit.di.module;
 import dagger.Module;
 import dagger.Provides;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
-import ru.digitalwand.nonstopfit.di.scope.Sign;
-import ru.digitalwand.nonstopfit.ui.sign.SignPresenter;
+import ru.digitalwand.nonstopfit.di.scope.login.Sign;
+import ru.digitalwand.nonstopfit.ui.login.sign.SignPresenter;
 
 /**
  * Created by Igor Goryainov

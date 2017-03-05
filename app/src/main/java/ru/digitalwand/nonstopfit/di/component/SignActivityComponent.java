@@ -2,8 +2,8 @@ package ru.digitalwand.nonstopfit.di.component;
 
 import dagger.Subcomponent;
 import ru.digitalwand.nonstopfit.di.module.SignPresenterModule;
-import ru.digitalwand.nonstopfit.di.scope.Sign;
-import ru.digitalwand.nonstopfit.ui.sign.SignActivity;
+import ru.digitalwand.nonstopfit.di.scope.login.Sign;
+import ru.digitalwand.nonstopfit.ui.login.sign.SignActivity;
 
 /**
  * Created by Igor Goryainov

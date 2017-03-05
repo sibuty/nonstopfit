@@ -3,6 +3,7 @@ package ru.digitalwand.nonstopfit.di.component;
 import dagger.Component;
 import ru.digitalwand.nonstopfit.di.module.LoginPresenterModule;
 import ru.digitalwand.nonstopfit.di.module.MainModule;
+import ru.digitalwand.nonstopfit.di.module.ResetPresenterModule;
 import ru.digitalwand.nonstopfit.di.module.SignPresenterModule;
 import ru.digitalwand.nonstopfit.di.scope.Main;
 
@@ -17,4 +18,6 @@ public interface MainComponent {
   LoginActivityComponent plus(LoginPresenterModule module);
 
   SignActivityComponent plus(SignPresenterModule module);
+
+  ResetActivityComponent plus(ResetPresenterModule module);
 }

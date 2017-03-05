@@ -44,7 +44,8 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
     super.setData(login);
   }
 
-  private boolean verify(@NonNull final Login login, @NonNull final LoginContract.View view) {
+  @Override
+  protected boolean verify(@NonNull final Login login, @NonNull final LoginContract.View view) {
     boolean result = true;
     if (StringUtils.isEmpty(login.userName)) {
       view.loginIsEmpty();

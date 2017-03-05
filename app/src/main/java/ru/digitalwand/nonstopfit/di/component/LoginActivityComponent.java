@@ -2,7 +2,7 @@ package ru.digitalwand.nonstopfit.di.component;
 
 import dagger.Subcomponent;
 import ru.digitalwand.nonstopfit.di.module.LoginPresenterModule;
-import ru.digitalwand.nonstopfit.di.scope.Login;
+import ru.digitalwand.nonstopfit.di.scope.login.Login;
 import ru.digitalwand.nonstopfit.ui.login.LoginActivity;
 
 /**

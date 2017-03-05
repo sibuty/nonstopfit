@@ -1,4 +1,4 @@
-package ru.digitalwand.nonstopfit.ui.sign;
+package ru.digitalwand.nonstopfit.ui.login.sign;
 
 import ru.digitalwand.nonstopfit.data.entity.SignResponse;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;

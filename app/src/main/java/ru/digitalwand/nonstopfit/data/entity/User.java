@@ -13,7 +13,11 @@ public class User {
   @JsonProperty("username")
   public String userName;
   //пароль пользователя
-  @JsonProperty("password")
-  public String password;
+  @JsonProperty("email")
+  public String email;
 
+  public User(String userName, String email) {
+    this.userName = userName;
+    this.email = email;
+  }
 }

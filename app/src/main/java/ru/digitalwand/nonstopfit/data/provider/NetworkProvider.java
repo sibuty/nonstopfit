@@ -23,6 +23,6 @@ public interface NetworkProvider {
   @POST("/api/login/")
   Observable<LoginResponse> login(@Body Login login);
 
-  @POST("/api/reset-password/")
+  @POST("/api/sendPassword-password/")
   Observable<ResetPasswordResponse> resetPassword(@Body User user);
 }
