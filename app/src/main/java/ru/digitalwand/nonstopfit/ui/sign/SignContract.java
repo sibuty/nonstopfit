@@ -1,7 +1,7 @@
 package ru.digitalwand.nonstopfit.ui.sign;
 
-import ru.digitalwand.nonstopfit.ui.BasePresenter;
-import ru.digitalwand.nonstopfit.ui.BaseView;
+import ru.digitalwand.nonstopfit.data.entity.SignResponse;
+import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;
 
 /**
  * Created by Igor Goryainov
@@ -10,11 +10,23 @@ import ru.digitalwand.nonstopfit.ui.BaseView;
  */
 public interface SignContract {
 
-  interface View extends BaseView<Presenter> {
+  interface View<T> extends BaseView<T> {
 
+    void signSucsess(SignResponse signResponse);
+
+    void loginIsEmpty();
+
+    void passwordIsEmpty();
+
+    void passwordsDontMatch();
+
+    void emailIsEmpty();
+
+    void emailIsInvalid();
   }
 
-  interface Presenter extends BasePresenter {
+  interface Presenter {
 
+    void signUp();
   }
 }

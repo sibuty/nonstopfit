@@ -15,7 +15,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class BasePresenter<T, V extends BaseView<T>> {
 
   private final CompositeSubscription subscriptions = new CompositeSubscription();
-  protected V view;
+  private V view;
+  private T data;
+
+  public T getData() {
+    return data;
+  }
+
+  public void setData(T data) {
+    this.data = data;
+  }
+
+  protected V getView() {
+    return view;
+  }
 
   public void attachView(@NonNull final V view) {
     checkNotNull(view);

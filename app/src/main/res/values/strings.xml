@@ -8,4 +8,10 @@
   <string name="error_field_is_empty">Заполните поле</string>
   <string name="button_sign_up">Регистрация</string>
   <string name="button_rest_password">Забыли пароль?</string>
+  <string name="hint_confirm_password">Повторите пароль</string>
+  <string name="hint_email">Email адресс</string>
+  <string name="error_email_is_not_valid">Недопустимый email адрес</string>
+  <string name="error_passwords_dont_match">Пароли не совпадают</string>
+  <string name="title_authorization">Nonstop.ru</string>
+  <string name="title_sign_up">Регистрация</string>
 </resources>

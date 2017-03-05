@@ -11,6 +11,7 @@ import ru.digitalwand.nonstopfit.data.entity.Sign;
 import ru.digitalwand.nonstopfit.data.entity.SignResponse;
 import ru.digitalwand.nonstopfit.data.entity.User;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
+import ru.digitalwand.nonstopfit.util.RxBackgoroundWrapper;
 import rx.Observable;
 
 /**
@@ -36,8 +37,20 @@ public class LoginWrapper {
     return networkProvider.login(login).flatMap(this::checkResponse);
   }
 
-  public Observable<ResetPasswordResponse> signUp(User user) {
+  public Observable<ResetPasswordResponse> resetPassword(User user) {
     return networkProvider.resetPassword(user).flatMap(this::checkResponse);
+  }
+
+  public Observable<SignResponse> wrappedSignUp(Sign sign) {
+    return RxBackgoroundWrapper.doInBackground(signUp(sign));
+  }
+
+  public Observable<LoginResponse> wrappedLogin(Login login) {
+    return RxBackgoroundWrapper.doInBackground(login(login));
+  }
+
+  public Observable<ResetPasswordResponse> wrappedResetPassword(User user) {
+    return RxBackgoroundWrapper.doInBackground(resetPassword(user));
   }
 
   private <T> Observable<T> checkResponse(T response) {

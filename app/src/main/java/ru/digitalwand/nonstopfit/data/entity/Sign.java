@@ -11,13 +11,19 @@ public class Sign {
 
   @JsonProperty("username")
   public String userName;
-  @JsonProperty("email")
-  public String email;
   // md5-хэш контантенации пароля
   @JsonProperty("password")
   public String password;
   // повторение пароля
   @JsonProperty("password_confirm")
   public String passwordConfirm;
+  @JsonProperty("email")
+  public String email;
 
+  public Sign(String userName, String password, String passwordConfirm, String email) {
+    this.userName = userName;
+    this.password = password;
+    this.passwordConfirm = passwordConfirm;
+    this.email = email;
+  }
 }

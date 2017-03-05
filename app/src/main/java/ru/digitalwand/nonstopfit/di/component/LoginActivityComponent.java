@@ -13,5 +13,5 @@ import ru.digitalwand.nonstopfit.ui.login.LoginActivity;
 @Login
 @Subcomponent(modules = LoginPresenterModule.class)
 public interface LoginActivityComponent {
-  void inject(LoginActivity loginActivity);
+  void inject(LoginActivity activity);
 }
