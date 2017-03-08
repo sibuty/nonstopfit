@@ -41,6 +41,10 @@ public class LoginWrapper {
     return networkProvider.resetPassword(user).flatMap(this::checkResponse);
   }
 
+  public Observable<String> verifySmsCode(String smsCode) {
+    return networkProvider.verifySmsCode(smsCode).flatMap(this::checkResponse);
+  }
+
   public Observable<SignResponse> wrappedSignUp(Sign sign) {
     return RxBackgoroundWrapper.doInBackground(signUp(sign));
   }
@@ -51,6 +55,10 @@ public class LoginWrapper {
 
   public Observable<ResetPasswordResponse> wrappedResetPassword(User user) {
     return RxBackgoroundWrapper.doInBackground(resetPassword(user));
+  }
+
+  public Observable<String> wrappedVerifySmsCode(String smsCode) {
+    return RxBackgoroundWrapper.doInBackground(verifySmsCode(smsCode));
   }
 
   private <T> Observable<T> checkResponse(T response) {

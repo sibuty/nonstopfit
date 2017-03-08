@@ -1,7 +1,9 @@
 package ru.digitalwand.nonstopfit.data.provider;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
 import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
@@ -25,4 +27,7 @@ public interface NetworkProvider {
 
   @POST("/api/sendPassword-password/")
   Observable<ResetPasswordResponse> resetPassword(@Body User user);
+
+  @GET("/api/verify-sms-code/")
+  Observable<String> verifySmsCode(@Query("sms_code") String smsCode);
 }

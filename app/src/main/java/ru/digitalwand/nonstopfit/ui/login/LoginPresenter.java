@@ -34,7 +34,8 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
       addSubscription(loginWrapper.wrappedLogin(login).subscribe(view::loginSuccess, throwable -> {
         throwable.printStackTrace();
         view.showError(throwable.getMessage());
-      }));
+        view.hideLoading();
+      }, view::hideLoading));
     }
   }
 

@@ -16,7 +16,7 @@ public class SignPresenterModule {
 
   @Provides
   @Sign
-  SignPresenter provideLoginPresenter(LoginWrapper loginWrapper) {
+  SignPresenter provideSignPresenter(LoginWrapper loginWrapper) {
     return new SignPresenter(loginWrapper);
   }
 }

@@ -27,6 +27,7 @@ import ru.digitalwand.nonstopfit.di.module.LoginPresenterModule;
 import ru.digitalwand.nonstopfit.ui.base.HasComponentBaseActivity;
 import ru.digitalwand.nonstopfit.ui.login.reset.ResetActivity;
 import ru.digitalwand.nonstopfit.ui.login.sign.SignActivity;
+import ru.digitalwand.nonstopfit.ui.login.sms.SmsApplyActivity;
 
 /**
  * Created by Igor Goryainov
@@ -38,6 +39,7 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
 
   protected static final int REQUEST_CODE_OPEN_SIGN_UP = 100;
   protected static final int REQUEST_CODE_OPEN_RESET = 101;
+  protected static final int REQUEST_CODE_OPEN_SMS_APPLY = 102;
 
   @BindView(R.id.til_login)
   protected TextInputLayout tilLogin;
@@ -92,6 +94,8 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
 
   @Override
   public void loginSuccess(@NonNull final LoginResponse loginResponse) {
+    Intent intent = new Intent(this, SmsApplyActivity.class);
+    startActivityForResult(intent, REQUEST_CODE_OPEN_SMS_APPLY);
   }
 
   @Override

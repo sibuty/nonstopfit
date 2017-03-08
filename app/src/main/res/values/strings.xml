@@ -17,4 +17,7 @@
   <string name="title_reset">Восстановление пароля</string>
   <string name="button_send_password">Выслать пароль</string>
   <string name="hint_login_or_mail">Имя или Email</string>
+  <string name="title_sms_apply">Поддтверждение по смс</string>
+  <string name="button_apply">Подтвердить</string>
+  <string name="hint_sms_code">Введите полученный смс код</string>
 </resources>
