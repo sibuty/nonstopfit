@@ -28,6 +28,6 @@ public interface NetworkProvider {
   @POST("/api/sendPassword-password/")
   Observable<ResetPasswordResponse> resetPassword(@Body User user);
 
-  @GET("/api/verify-sms-code/")
+  @GET("/api/verifyData-sms-code/")
   Observable<String> verifySmsCode(@Query("sms_code") String smsCode);
 }

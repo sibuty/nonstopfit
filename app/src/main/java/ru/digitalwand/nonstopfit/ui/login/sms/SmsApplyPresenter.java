@@ -25,7 +25,7 @@ public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.Vi
   }
 
   @Override
-  protected boolean verify(String data, SmsApplyContract.View<String> view) {
+  protected boolean verifyData(String data, SmsApplyContract.View<String> view) {
     boolean result = true;
     if (StringUtils.isEmpty(data)) {
       view.showEmptySmsCodeError();

@@ -44,5 +44,5 @@ public abstract class BasePresenter<T, V extends BaseView<T>> {
     subscriptions.add(subscription);
   }
 
-  protected abstract boolean verify(T data, V view);
+  protected abstract boolean verifyData(T data, V view);
 }

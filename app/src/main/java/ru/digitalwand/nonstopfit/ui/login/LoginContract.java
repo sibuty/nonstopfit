@@ -19,10 +19,16 @@ public interface LoginContract {
     void loginIsEmpty();
 
     void passwordIsEmpty();
+
+    void setButtonEnterEnable(boolean result);
+
+    void userNameIsInvalid();
   }
 
   interface Presenter {
 
     void login();
+
+    void verifyPassword(String password);
   }
 }

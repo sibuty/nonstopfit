@@ -5,8 +5,15 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/widget_toolbar" />
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      >
 
-  <include layout="@layout/content_activity_login" />
+    <include layout="@layout/content_activity_login" />
+
+  </ScrollView>
+  <include layout="@layout/widget_toolbar" />
 
 </LinearLayout>

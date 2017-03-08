@@ -20,4 +20,5 @@
   <string name="title_sms_apply">Поддтверждение по смс</string>
   <string name="button_apply">Подтвердить</string>
   <string name="hint_sms_code">Введите полученный смс код</string>
+  <string name="button_skip">Пропустить</string>
 </resources>

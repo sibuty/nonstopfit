@@ -30,7 +30,7 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
     final Login login = getData();
     checkNotNull(login);
     final LoginContract.View view = getView();
-    if (verify(login, view)) {
+    if (verifyData(login, view)) {
       addSubscription(loginWrapper.wrappedLogin(login).subscribe(view::loginSuccess, throwable -> {
         throwable.printStackTrace();
         view.showError(throwable.getMessage());
@@ -40,16 +40,28 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
   }
 
   @Override
+  public void verifyPassword(final String password) {
+    boolean result = false;
+    if (StringUtils.isNotEmpty(password)) {
+      result = password.length() >= 6;
+    }
+    getView().setButtonEnterEnable(result);
+  }
+
+  @Override
   public void setData(@NonNull final Login login) {
     checkNotNull(login);
     super.setData(login);
   }
 
   @Override
-  protected boolean verify(@NonNull final Login login, @NonNull final LoginContract.View view) {
+  protected boolean verifyData(@NonNull final Login login, @NonNull final LoginContract.View view) {
     boolean result = true;
     if (StringUtils.isEmpty(login.userName)) {
       view.loginIsEmpty();
+      result = false;
+    } else if (login.userName.contains("@") && !login.userName.matches("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]{2,3}")) {
+      view.userNameIsInvalid();
       result = false;
     }
     if (StringUtils.isEmpty(login.password)) {

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   protected TextInputLayout tilPassword;
   @BindView(R.id.et_password)
   protected EditText etPassword;
+  @BindView(R.id.b_enter)
+  protected Button bEnter;
   @Inject
   protected LoginPresenter presenter;
   private boolean ready;
@@ -104,8 +107,18 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   }
 
   @Override
+  public void userNameIsInvalid() {
+    tilLogin.setError(getString(R.string.error_email_is_not_valid));
+  }
+
+  @Override
   public void passwordIsEmpty() {
     tilPassword.setError(getString(R.string.error_field_is_empty));
+  }
+
+  @Override
+  public void setButtonEnterEnable(final boolean result) {
+    bEnter.setEnabled(result);
   }
 
   @Override
@@ -162,15 +175,16 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
 
   @OnTextChanged(value = R.id.et_login, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
   protected void onLoginChanged(final Editable editable) {
-    if (StringUtils.isNoneEmpty(editable)) {
+    if (StringUtils.isNotEmpty(editable)) {
       tilLogin.setError(null);
     }
   }
 
   @OnTextChanged(value = R.id.et_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
   protected void onPasswordChanged(final Editable editable) {
-    if (StringUtils.isNoneEmpty(editable)) {
+    if (StringUtils.isNotEmpty(editable)) {
       tilPassword.setError(null);
+      presenter.verifyPassword(editable.toString());
     }
   }
 

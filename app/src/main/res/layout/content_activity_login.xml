@@ -3,24 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
-
 
   <LinearLayout
       android:id="@+id/ll_login_form"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
+      android:divider="@drawable/empty_divider_10dp"
       android:orientation="vertical"
       android:padding="20dp"
+      android:showDividers="middle"
       >
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:orientation="vertical"
         >
 
@@ -42,7 +40,6 @@
         android:id="@+id/til_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         >
 
       <EditText
@@ -58,49 +55,66 @@
 
     </android.support.design.widget.TextInputLayout>
 
-
     <Button
         android:id="@+id/b_enter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
+        android:enabled="false"
         android:text="@string/button_enter"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
 
+    <Button
+        android:id="@+id/b_skip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/button_skip"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
   </LinearLayout>
 
-  <LinearLayout
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
-      android:divider="@drawable/empty_divider_10dp"
-      android:orientation="horizontal"
+      android:layout_below="@+id/ll_login_form"
       android:padding="10dp"
-      android:showDividers="middle"
       >
 
-    <Button
-        android:id="@+id/b_sign_up"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:text="@string/button_sign_up"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:divider="@drawable/empty_divider_10dp"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
 
-    <Button
-        android:id="@+id/b_reset_password"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:text="@string/button_reset_password"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        />
+      <Button
+          android:id="@+id/b_sign_up"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:text="@string/button_sign_up"
+          android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+          />
 
-  </LinearLayout>
+      <Button
+          android:id="@+id/b_reset_password"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:text="@string/button_reset_password"
+          android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+          />
+
+    </LinearLayout>
+
+  </FrameLayout>
 
 </RelativeLayout>

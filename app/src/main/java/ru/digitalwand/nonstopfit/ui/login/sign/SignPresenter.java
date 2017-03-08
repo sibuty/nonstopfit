@@ -30,7 +30,7 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     final Sign sign = getData();
     checkNotNull(sign);
     final SignContract.View view = getView();
-    if (verify(sign, view)) {
+    if (verifyData(sign, view)) {
       addSubscription(loginWrapper.wrappedSignUp(sign).subscribe(view::signSucsess, throwable -> {
         throwable.printStackTrace();
         view.showError(throwable.getMessage());
@@ -39,7 +39,7 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
   }
 
   @Override
-  protected boolean verify(@NonNull final Sign sign, @NonNull final SignContract.View view) {
+  protected boolean verifyData(@NonNull final Sign sign, @NonNull final SignContract.View view) {
     boolean result = true;
     if (StringUtils.isEmpty(sign.userName)) {
       view.loginIsEmpty();

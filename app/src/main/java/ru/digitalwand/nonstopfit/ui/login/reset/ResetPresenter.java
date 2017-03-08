@@ -30,7 +30,7 @@ public class ResetPresenter extends BasePresenter<User, ResetContract.View<User>
     final User user = getData();
     checkNotNull(user);
     final ResetContract.View<User> view = getView();
-    if (verify(user, view)) {
+    if (verifyData(user, view)) {
       addSubscription(
           loginWrapper.wrappedResetPassword(user).subscribe(view::passwordWasSent, throwable -> {
             throwable.printStackTrace();
@@ -40,7 +40,7 @@ public class ResetPresenter extends BasePresenter<User, ResetContract.View<User>
   }
 
   @Override
-  protected boolean verify(final User user, final ResetContract.View<User> view) {
+  protected boolean verifyData(final User user, final ResetContract.View<User> view) {
     boolean result = true;
     if (StringUtils.isEmpty(user.userName) && StringUtils.isEmpty(user.email)) {
       view.fieldIsEmpty();
