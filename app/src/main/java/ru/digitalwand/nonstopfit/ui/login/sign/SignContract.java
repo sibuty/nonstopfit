@@ -1,6 +1,5 @@
 package ru.digitalwand.nonstopfit.ui.login.sign;
 
-import ru.digitalwand.nonstopfit.data.entity.SignResponse;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;
 
 /**
@@ -12,21 +11,35 @@ public interface SignContract {
 
   interface View<T> extends BaseView<T> {
 
-    void signSucsess(SignResponse signResponse);
+    void onSignSuccsess();
 
-    void loginIsEmpty();
+    void errorFirstnameIsEmpty();
 
-    void passwordIsEmpty();
+    void errorSurnameIsEmpty();
 
-    void passwordsDontMatch();
+    void errorPhoneIsEmpty();
 
-    void emailIsEmpty();
+    void errorEmailIsEmpty();
 
-    void emailIsInvalid();
+    void errorEmailIsInvalid();
+
+    void errorPasswordIsEmpty();
+
+    void errorPasswordsDontMatch();
+
+    void errorBirthdayIsEmpty();
+
+    void errorCityIsNotSelected();
+
+    void errorDateIsInvalid();
   }
 
   interface Presenter {
 
     void signUp();
+
+    void setBirthdayDate(String stringDate);
+
+    boolean verifyBirthdayDate(String stringDate);
   }
 }

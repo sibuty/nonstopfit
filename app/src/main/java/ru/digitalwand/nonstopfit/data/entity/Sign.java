@@ -9,21 +9,56 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Sign {
 
-  @JsonProperty("username")
-  public String userName;
-  // md5-хэш контантенации пароля
-  @JsonProperty("password")
-  public String password;
-  // повторение пароля
-  @JsonProperty("password_confirm")
-  public String passwordConfirm;
+  @JsonProperty("fistname")
+  public String fistname;
+  @JsonProperty("surname")
+  public String surname;
+  @JsonProperty("phone")
+  public String phone;
   @JsonProperty("email")
   public String email;
+  @JsonProperty("password")
+  public String password;
+  @JsonProperty("password_confirm")
+  public String passwordConfirm;
+  @JsonProperty("date_birthday")
+  public long dateBirthday;
+  @JsonProperty("gender")
+  public String gender;
+  @JsonProperty("city")
+  public String city;
 
-  public Sign(String userName, String password, String passwordConfirm, String email) {
-    this.userName = userName;
+  public Sign(String fistname,
+              String surname,
+              String phone,
+              String email,
+              String password,
+              String passwordConfirm,
+              long dateBirthday,
+              String gender,
+              String city) {
+    this.fistname = fistname;
+    this.surname = surname;
+    this.phone = phone;
+    this.email = email;
     this.password = password;
     this.passwordConfirm = passwordConfirm;
-    this.email = email;
+    this.dateBirthday = dateBirthday;
+    this.gender = gender;
+    this.city = city;
+  }
+
+  public enum Gender {
+    MALE("Мужчина"), FEMALE("Женища"), NO_MATTER("Не важно");
+
+    private final String title;
+
+    Gender(final String title) {
+      this.title = title;
+    }
+
+    public String getTitle() {
+      return title;
+    }
   }
 }
