@@ -85,7 +85,7 @@ public class SmsApplyActivity extends HasComponentBaseActivity<SmsApplyComponent
 
   @Override
   public Context context() {
-    return this;
+    return getApplicationContext();
   }
 
   @Override
@@ -114,9 +114,9 @@ public class SmsApplyActivity extends HasComponentBaseActivity<SmsApplyComponent
   }
 
   @Override
-  public void smsApplySuccess(String response) {
+  public void smsApplySuccess() {
     final Intent result = new Intent();
-    result.putExtra(EXTRA_RESULT, response);
+    result.putExtra(EXTRA_RESULT, presenter.getData());
     setResult(RESULT_OK, result);
   }
 

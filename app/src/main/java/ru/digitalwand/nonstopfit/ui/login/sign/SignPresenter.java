@@ -116,6 +116,7 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
   }
 
   private void onSuccess(final SignResponse response) {
+    getView().onSignSuccsess();
   }
 
   private void onError(final Throwable throwable) {

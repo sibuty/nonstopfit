@@ -1,12 +1,19 @@
 package ru.digitalwand.nonstopfit.ui.login.sms;
 
+import android.Manifest;
 import android.content.IntentFilter;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+
+import ru.digitalwand.nonstopfit.R;
 import ru.digitalwand.nonstopfit.data.receiver.SmsCodeReceiver;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BasePresenter;
@@ -19,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * on 08.03.2017 14:47.
  */
 public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.View<String>>
-    implements SmsApplyContract.Presenter {
+    implements SmsApplyContract.Presenter, PermissionListener {
 
   @NonNull
   private final LoginWrapper loginWrapper;
@@ -27,6 +34,7 @@ public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.Vi
   private final SmsCodeReceiver receiver = new SmsCodeReceiver(this::onReceive);
   @Nullable
   private IntentFilter intentFilter;
+  private boolean wasGranted;
 
   public SmsApplyPresenter(@NonNull final LoginWrapper loginWrapper) {
     this.loginWrapper = loginWrapper;
@@ -41,25 +49,22 @@ public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.Vi
 
   @Override
   public void registerSmsCodeReceiver() {
-    if (getView().isReady()) {
-      if (intentFilter == null) {
-        intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
-        intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-      }
-      getView().context().registerReceiver(receiver, intentFilter);
-    }
+    new TedPermission(getView().context())
+        .setPermissionListener(this)
+        .setRationaleMessage(R.string.message_need_sms_permissions)
+        .setRationaleConfirmText(R.string.button_next)
+        .setDeniedMessage(R.string.error_denied_sms_permission)
+        .setDeniedCloseButtonText(R.string.button_close)
+        .setGotoSettingButtonText(R.string.button_settings)
+        .setPermissions(Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS)
+        .check();
   }
 
   @Override
   public void unregisterSmsCodeReceiver() {
-    if (getView().isReady()) {
+    if (wasGranted && getView().isReady()) {
       getView().context().unregisterReceiver(receiver);
     }
-  }
-
-  private void onReceive(final String smsCode) {
-    setData(smsCode);
-    fillSmsCodeField();
   }
 
   @Override
@@ -85,11 +90,41 @@ public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.Vi
     checkNotNull(smsCode);
     final SmsApplyContract.View<String> view = getView();
     view.showLoading();
-    addSubscription(
-        loginWrapper.wrappedVerifySmsCode(smsCode).subscribe(view::smsApplySuccess, throwable -> {
-          throwable.printStackTrace();
-          view.showError(throwable.getMessage());
-          view.hideLoading();
-        }, view::hideLoading));
+    addSubscription(loginWrapper
+                        .wrappedVerifySmsCode(smsCode)
+                        .subscribe(this::onSuccess, this::onError, view::hideLoading));
+  }
+
+  @Override
+  public void onPermissionGranted() {
+    wasGranted = true;
+    if (getView().isReady()) {
+      if (intentFilter == null) {
+        intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+        intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+      }
+      getView().context().registerReceiver(receiver, intentFilter);
+    }
+  }
+
+  @Override
+  public void onPermissionDenied(final ArrayList<String> deniedPermissions) {
+    wasGranted = false;
+  }
+
+  private void onReceive(final String smsCode) {
+    if (StringUtils.isNotEmpty(smsCode)) {
+      setData(smsCode);
+      fillSmsCodeField();
+    }
+  }
+
+  private void onSuccess(final String response) {
+    getView().smsApplySuccess();
+  }
+
+  private void onError(final Throwable throwable) {
+    throwable.printStackTrace();
+    getView().hideLoading();
   }
 }

@@ -15,7 +15,7 @@ public interface SmsApplyContract {
 
     void setSmsCode(final String smsCode);
 
-    void smsApplySuccess(String response);
+    void smsApplySuccess();
   }
 
   interface Presenter {

@@ -79,6 +79,7 @@ dependencies {
   //tools
   compile "com.google.guava:guava:$versions.GUAVA"
   compile "org.apache.commons:commons-lang3:$versions.COMMAND_LANG3"
+  compile "gun0912.ted:tedpermission:$versions.TED_PERMISSION"
 
   //test
   compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
