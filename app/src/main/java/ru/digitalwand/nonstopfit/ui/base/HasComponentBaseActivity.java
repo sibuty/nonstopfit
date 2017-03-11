@@ -16,11 +16,11 @@ import ru.digitalwand.nonstopfit.di.module.MainModule;
  */
 public abstract class HasComponentBaseActivity<T> extends BaseActivity implements HasComponent<T> {
 
-  protected static MainComponent buildMainComponent() {
+  public static MainComponent buildMainComponent() {
     return DaggerMainComponent.builder()
-        .appComponent(App.getAppComponent())
-        .mainModule(new MainModule())
-        .build();
+                              .appComponent(App.getAppComponent())
+                              .mainModule(new MainModule())
+                              .build();
   }
 
   protected abstract void applyInject();

@@ -60,7 +60,8 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
     if (StringUtils.isEmpty(login.userName)) {
       view.loginIsEmpty();
       result = false;
-    } else if (login.userName.contains("@") && !login.userName.matches("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]{2,3}")) {
+    } else if (login.userName.contains("@") && !login.userName.matches(
+        "[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]{2,3}")) {
       view.userNameIsInvalid();
       result = false;
     }

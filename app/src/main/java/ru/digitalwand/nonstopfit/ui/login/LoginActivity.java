@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnLongClick;
 import butterknife.OnTextChanged;
 import ru.digitalwand.nonstopfit.R;
 import ru.digitalwand.nonstopfit.data.entity.Login;
@@ -150,6 +151,12 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   protected void onLoginClick() {
     presenter.setData(getLogin());
     presenter.login();
+  }
+
+  @OnLongClick(R.id.b_sign_up)
+  protected boolean stub() {
+    startActivityForResult(new Intent(this, SmsApplyActivity.class), REQUEST_CODE_OPEN_SMS_APPLY);
+    return true;
   }
 
   @OnClick(R.id.b_sign_up)

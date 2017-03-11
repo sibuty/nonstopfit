@@ -65,7 +65,20 @@ public class SmsApplyActivity extends HasComponentBaseActivity<SmsApplyComponent
   }
 
   @Override
+  protected void onStart() {
+    super.onStart();
+    presenter.registerSmsCodeReceiver();
+  }
+
+  @Override
+  protected void onResume() {
+    presenter.fillSmsCodeField();
+    super.onResume();
+  }
+
+  @Override
   protected void onDestroy() {
+    presenter.unregisterSmsCodeReceiver();
     super.onDestroy();
     presenter.detachView();
   }
@@ -101,7 +114,7 @@ public class SmsApplyActivity extends HasComponentBaseActivity<SmsApplyComponent
   }
 
   @Override
-  public void smsApplySuccsess(String response) {
+  public void smsApplySuccess(String response) {
     final Intent result = new Intent();
     result.putExtra(EXTRA_RESULT, response);
     setResult(RESULT_OK, result);
@@ -109,6 +122,11 @@ public class SmsApplyActivity extends HasComponentBaseActivity<SmsApplyComponent
 
   private String getSmsCode() {
     return etSmsCode.getText().toString();
+  }
+
+  @Override
+  public void setSmsCode(final String smsCode) {
+    etSmsCode.setText(smsCode);
   }
 
   @OnClick(R.id.b_apply)

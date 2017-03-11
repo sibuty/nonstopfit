@@ -1,9 +1,13 @@
 package ru.digitalwand.nonstopfit.ui.login.sms;
 
+import android.content.IntentFilter;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 
+import ru.digitalwand.nonstopfit.data.receiver.SmsCodeReceiver;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BasePresenter;
 
@@ -19,9 +23,50 @@ public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.Vi
 
   @NonNull
   private final LoginWrapper loginWrapper;
+  @NonNull
+  private final SmsCodeReceiver receiver = new SmsCodeReceiver(this::onReceive);
+  @Nullable
+  private IntentFilter intentFilter;
 
   public SmsApplyPresenter(@NonNull final LoginWrapper loginWrapper) {
     this.loginWrapper = loginWrapper;
+  }
+
+  @Override
+  public void fillSmsField() {
+    if (getView().isReady()) {
+      getView().setSmsCode(getData());
+    }
+  }
+
+  @Override
+  public void registerSmsCodeReceiver() {
+    if (getView().isReady()) {
+      if (intentFilter == null) {
+        intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+        intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+      }
+      getView().context().registerReceiver(receiver, intentFilter);
+    }
+  }
+
+  @Override
+  public void unregisterSmsCodeReceiver() {
+    if (getView().isReady()) {
+      getView().context().unregisterReceiver(receiver);
+    }
+  }
+
+  private void onReceive(final String smsCode) {
+    setData(smsCode);
+    fillSmsCodeField();
+  }
+
+  @Override
+  public void fillSmsCodeField() {
+    if (getView().isReady()) {
+      getView().setSmsCode(getData());
+    }
   }
 
   @Override
@@ -41,7 +86,7 @@ public class SmsApplyPresenter extends BasePresenter<String, SmsApplyContract.Vi
     final SmsApplyContract.View<String> view = getView();
     view.showLoading();
     addSubscription(
-        loginWrapper.wrappedVerifySmsCode(smsCode).subscribe(view::smsApplySuccsess, throwable -> {
+        loginWrapper.wrappedVerifySmsCode(smsCode).subscribe(view::smsApplySuccess, throwable -> {
           throwable.printStackTrace();
           view.showError(throwable.getMessage());
           view.hideLoading();

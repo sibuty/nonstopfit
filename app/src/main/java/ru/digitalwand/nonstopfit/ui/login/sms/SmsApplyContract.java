@@ -13,10 +13,20 @@ public interface SmsApplyContract {
 
     void showEmptySmsCodeError();
 
-    void smsApplySuccsess(String response);
+    void setSmsCode(final String smsCode);
+
+    void smsApplySuccess(String response);
   }
 
   interface Presenter {
+
+    void fillSmsField();
+
+    void registerSmsCodeReceiver();
+
+    void unregisterSmsCodeReceiver();
+
+    void fillSmsCodeField();
 
     void applyCode();
   }
