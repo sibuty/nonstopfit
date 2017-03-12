@@ -3,4 +3,8 @@
   <color name="colorPrimary">#3F51B5</color>
   <color name="colorPrimaryDark">#303F9F</color>
   <color name="colorAccent">#FF4081</color>
+
+  <color name="end_splash_screen">#611ec5</color>
+  <color name="start_splash_screen">#8e27ab</color>
+  <color name="ring_logo_splash_screen">#873cc3</color>
 </resources>
