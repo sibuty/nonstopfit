@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <!-- material colors -->
+    <item name="colorPrimary">@color/color_primary</item>
+    <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="colorAccent">@color/color_accent</item>
+
+    <!-- styles -->
+    <item name="android:toolbarStyle">@style/Toolbar</item>
+    <item name="android:radioButtonStyle">@style/RadioButton</item>
+    <item name="android:buttonStyle">@style/Button</item>
+
+    <!-- other -->
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowTranslucentStatus">true</item>
+
+  </style>
+
+  <style name="AppTheme.Login" parent="AppTheme">
+    <item name="android:fitsSystemWindows">true</item>
+    <item name="android:windowBackground">@drawable/gradient_splash_screen</item>
+    <item name="android:colorControlNormal">@color/color_name_background_secondary</item>
+    <item name="colorControlActivated">@color/color_main</item>
+    <item name="android:textColorHint">@color/color_name_background_secondary</item>
+    <item name="android:textColorPrimary">@color/color_main</item>
+    <item name="android:textColorTertiary">@color/color_main</item>
+    <item name="android:colorForeground">@color/color_name_background_secondary</item>
+  </style>
+
+  <style name="AppTheme.Main" parent="AppTheme">
+    <item name="android:colorForeground">@color/color_name_background_secondary</item>
+    <item name="colorControlActivated">@color/color_main_background</item>
+  </style>
+
+  <style name="SplashTheme" parent="AppTheme">
+    <item name="android:fitsSystemWindows">true</item>
+    <item name="android:windowTranslucentNavigation">true</item>
+    <item name="android:windowBackground">@drawable/background_splash_screen</item>
+  </style>
+
+  <style name="AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+    <item name="android:textColorPrimary">@color/color_main</item>
+    <item name="android:background">@color/color_primary</item>
+  </style>
+
+</resources>

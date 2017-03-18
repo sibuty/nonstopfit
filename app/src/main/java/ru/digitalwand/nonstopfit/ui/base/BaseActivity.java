@@ -59,17 +59,24 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   protected void initToolbar() {
+    toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
     setSupportActionBar(toolbar);
   }
 
-  protected void setDisplayHome(boolean enable) {
-    if (!enable) {
-      return;
-    }
+  protected void setDisplayHome(final boolean enable) {
     final ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       actionBar.setDisplayHomeAsUpEnabled(enable);
       actionBar.setDisplayShowHomeEnabled(enable);
     }
+  }
+
+  private int getStatusBarHeight() {
+    int result = 0;
+    final int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
   }
 }

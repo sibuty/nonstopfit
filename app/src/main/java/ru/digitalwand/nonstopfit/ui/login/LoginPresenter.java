@@ -58,11 +58,11 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
   protected boolean verifyData(@NonNull final Login login, @NonNull final LoginContract.View view) {
     boolean result = true;
     if (StringUtils.isEmpty(login.userName)) {
-      view.loginIsEmpty();
+      view.emailIsEmpty();
       result = false;
     } else if (login.userName.contains("@") && !login.userName.matches(
         "[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]{2,3}")) {
-      view.userNameIsInvalid();
+      view.emailIsInvalid();
       result = false;
     }
     if (StringUtils.isEmpty(login.password)) {

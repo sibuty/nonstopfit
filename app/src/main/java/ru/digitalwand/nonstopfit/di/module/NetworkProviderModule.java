@@ -49,7 +49,8 @@ public class NetworkProviderModule {
   @Provides
   @Singleton
   ObjectMapper provideJacksonMapper() {
-    return new ObjectMapper().disable(FAIL_ON_UNKNOWN_PROPERTIES)
+    return new ObjectMapper()
+        .disable(FAIL_ON_UNKNOWN_PROPERTIES)
         .setPropertyNamingStrategy(SNAKE_CASE);
   }
 
@@ -62,7 +63,8 @@ public class NetworkProviderModule {
   @Provides
   @Singleton
   NetworkProvider provideRetrofit(final ObjectMapper mapper, final OkHttpClient okHttpClient) {
-    return new Retrofit.Builder().baseUrl(baseUrl)
+    return new Retrofit.Builder()
+        .baseUrl(baseUrl)
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .addConverterFactory(JacksonConverterFactory.create(mapper))
         .client(okHttpClient)

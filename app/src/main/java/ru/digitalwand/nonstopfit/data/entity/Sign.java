@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Sign {
 
-  @JsonProperty("fistname")
+  @JsonProperty("username")
   public String fistname;
   @JsonProperty("surname")
   public String surname;

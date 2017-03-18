@@ -90,7 +90,8 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   @State
   protected Date birthday;
   @State
-  protected Sign.Gender gender;
+  @NonNull
+  protected Sign.Gender gender = Sign.Gender.NO_MATTER;
   @State
   protected String city;
   private boolean ready;
@@ -215,11 +216,15 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   @NonNull
   protected Sign getSign() {
     final long dateBirthday = birthday == null ? 0L : birthday.getTime();
-    final String stringGender = gender == null ? null : gender.getTitle();
-    return new Sign(etFirstname.getText().toString(), etSurname.getText().toString(),
-                    etPhone.getText().toString(), etEmail.getText().toString(),
-                    etPassword.getText().toString(), etPasswordConfirm.getText().toString(),
-                    dateBirthday, stringGender, city);
+    return new Sign(etFirstname.getText().toString(),
+                    etSurname.getText().toString(),
+                    etPhone.getText().toString(),
+                    etEmail.getText().toString(),
+                    etPassword.getText().toString(),
+                    etPasswordConfirm.getText().toString(),
+                    dateBirthday,
+                    gender.getTitle(),
+                    city);
   }
 
   @OnClick(R.id.b_sign_up)

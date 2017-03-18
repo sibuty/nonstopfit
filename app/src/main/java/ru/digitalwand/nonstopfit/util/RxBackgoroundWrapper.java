@@ -17,7 +17,8 @@ public class RxBackgoroundWrapper {
 
   public static <T> Subscription doInBackground(@NonNull Observable<T> observable,
                                                 @NonNull Subscriber<T> subscriber) {
-    return observable.subscribeOn(Schedulers.io())
+    return observable
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(subscriber);
   }

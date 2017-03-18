@@ -14,14 +14,15 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     buildConfigField "String", "SIMPLE_DATE_FORMAT", "\"dd.MM.yyyy\""
     buildConfigField "String", "SMS_ADDRESS", "\"111\""
+    buildConfigField "String", "MAIN_CONTROLLER", "\"/api/v1/\""
   }
 
   buildTypes {
     debug {
-      buildConfigField "String", "SERVER_URL", "\"https://www.google.ru\""
+      buildConfigField "String", "SERVER_URL", "\"http://nonstop.dev2.ddemo.ru\""
     }
     release {
-      buildConfigField "String", "SERVER_URL", "\"https://www.google.ru\""
+      buildConfigField "String", "SERVER_URL", "\"http://nonstop.dev2.ddemo.ru\""
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }

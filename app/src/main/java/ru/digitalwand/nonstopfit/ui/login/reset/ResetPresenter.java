@@ -31,11 +31,12 @@ public class ResetPresenter extends BasePresenter<User, ResetContract.View<User>
     checkNotNull(user);
     final ResetContract.View<User> view = getView();
     if (verifyData(user, view)) {
-      addSubscription(
-          loginWrapper.wrappedResetPassword(user).subscribe(view::passwordWasSent, throwable -> {
-            throwable.printStackTrace();
-            view.showError(throwable.getMessage());
-          }));
+      addSubscription(loginWrapper
+                          .wrappedResetPassword(user)
+                          .subscribe(view::passwordWasSent, throwable -> {
+                            throwable.printStackTrace();
+                            view.showError(throwable.getMessage());
+                          }));
     }
   }
 

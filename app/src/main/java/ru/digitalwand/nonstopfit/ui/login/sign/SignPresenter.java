@@ -39,9 +39,9 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     checkNotNull(sign);
     final SignContract.View view = getView();
     if (verifyData(sign, view)) {
-      addSubscription(loginWrapper.wrappedSignUp(sign)
-                                  .subscribe(this::onSuccess, this::onError,
-                                             getView()::onSignSuccsess));
+      addSubscription(loginWrapper
+                          .wrappedSignUp(sign)
+                          .subscribe(this::onSuccess, this::onError, getView()::onSignSuccsess));
     }
   }
 
@@ -66,8 +66,9 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     boolean result = true;
     if (StringUtils.isEmpty(stringDate)) {
       result = false;
-    } else if (!stringDate.matches(
-        getView().context().getString(R.string.regexp_validate_simple_date))) {
+    } else if (!stringDate.matches(getView()
+                                       .context()
+                                       .getString(R.string.regexp_validate_simple_date))) {
       getView().errorDateIsInvalid();
       result = false;
     }
@@ -99,8 +100,8 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     if (StringUtils.isEmpty(sign.password)) {
       view.errorPasswordIsEmpty();
       result = false;
-    } else if (StringUtils.isEmpty(sign.passwordConfirm) || !sign.password.equals(
-        sign.passwordConfirm)) {
+    } else if (StringUtils.isEmpty(sign.passwordConfirm)
+               || !sign.password.equals(sign.passwordConfirm)) {
       view.errorPasswordsDontMatch();
       result = false;
     }

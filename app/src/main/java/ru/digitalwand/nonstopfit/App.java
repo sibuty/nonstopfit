@@ -30,7 +30,8 @@ public class App extends Application {
   }
 
   protected AppComponent buildComponent() {
-    return DaggerAppComponent.builder()
+    return DaggerAppComponent
+        .builder()
         .appModule(new AppModule(this))
         .networkProviderModule(new NetworkProviderModule(BuildConfig.SERVER_URL))
         .loginWrapperModule(new LoginWrapperModule())

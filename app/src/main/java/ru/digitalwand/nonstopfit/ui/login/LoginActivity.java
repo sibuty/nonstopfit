@@ -7,9 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnFocusChange;
 import butterknife.OnLongClick;
 import butterknife.OnTextChanged;
 import ru.digitalwand.nonstopfit.R;
@@ -43,6 +46,8 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   protected static final int REQUEST_CODE_OPEN_RESET = 101;
   protected static final int REQUEST_CODE_OPEN_SMS_APPLY = 102;
 
+  @BindView(R.id.sv_login_form)
+  protected ScrollView svLoginForm;
   @BindView(R.id.til_login)
   protected TextInputLayout tilLogin;
   @BindView(R.id.et_login)
@@ -74,8 +79,8 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
 
   @Override
   protected void initToolbar() {
-    getToolbar().setTitle(R.string.title_authorization);
-    super.initToolbar();
+    //На этом экране toolbar не нужен
+    toolbar.setVisibility(View.GONE);
   }
 
   @Override
@@ -103,17 +108,20 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   }
 
   @Override
-  public void loginIsEmpty() {
+  public void emailIsEmpty() {
+    tilLogin.setErrorEnabled(true);
     tilLogin.setError(getString(R.string.error_field_is_empty));
   }
 
   @Override
-  public void userNameIsInvalid() {
+  public void emailIsInvalid() {
+    tilLogin.setErrorEnabled(true);
     tilLogin.setError(getString(R.string.error_email_is_not_valid));
   }
 
   @Override
   public void passwordIsEmpty() {
+    tilLogin.setErrorEnabled(true);
     tilPassword.setError(getString(R.string.error_field_is_empty));
   }
 
@@ -145,6 +153,18 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   @Override
   public boolean isReady() {
     return ready;
+  }
+
+  @OnClick(value = { R.id.et_login, R.id.et_password })
+  protected void onClickEtFields() {
+    onFocusEtFields(true);
+  }
+
+  @OnFocusChange(value = { R.id.et_login, R.id.et_password })
+  protected void onFocusEtFields(final boolean focus) {
+    if (focus) {
+      svLoginForm.postDelayed(() -> svLoginForm.smoothScrollTo(0, etPassword.getBottom()), 300L);
+    }
   }
 
   @OnClick(R.id.b_enter)
@@ -184,6 +204,7 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   protected void onLoginChanged(final Editable editable) {
     if (StringUtils.isNotEmpty(editable)) {
       tilLogin.setError(null);
+      tilLogin.setErrorEnabled(false);
     }
   }
 
@@ -191,6 +212,7 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   protected void onPasswordChanged(final Editable editable) {
     if (StringUtils.isNotEmpty(editable)) {
       tilPassword.setError(null);
+      tilPassword.setErrorEnabled(false);
       presenter.verifyPassword(editable.toString());
     }
   }

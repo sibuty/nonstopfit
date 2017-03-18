@@ -4,6 +4,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import ru.digitalwand.nonstopfit.BuildConfig;
 import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
 import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
@@ -19,15 +20,15 @@ import rx.Observable;
  */
 public interface NetworkProvider {
 
-  @POST("/api/sign-up/")
+  @POST(BuildConfig.MAIN_CONTROLLER + "/sign-up/")
   Observable<SignResponse> signUp(@Body Sign sign);
 
-  @POST("/api/login/")
+  @POST(BuildConfig.MAIN_CONTROLLER + "/login/")
   Observable<LoginResponse> login(@Body Login login);
 
-  @POST("/api/sendPassword-password/")
+  @POST(BuildConfig.MAIN_CONTROLLER + "/sendPassword-password/")
   Observable<ResetPasswordResponse> resetPassword(@Body User user);
 
-  @GET("/api/verifyData-sms-code/")
+  @GET(BuildConfig.MAIN_CONTROLLER + "/verifyData-sms-code/")
   Observable<String> verifySmsCode(@Query("sms_code") String smsCode);
 }

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
-  <color name="colorAccent">#FF4081</color>
+  <color name="color_primary">#5407C0</color>
+  <color name="color_primary_dark">#3D0095</color>
+  <color name="color_accent">#EA2F6F</color>
+  <color name="color_main">#FFFFFF</color>
+  <color name="color_main_secondary">#000000</color>
+  <color name="color_main_background">#8C48EF</color>
+  <color name="color_name_background_secondary">#AC8ADE</color>
 
-  <color name="end_splash_screen">#611ec5</color>
-  <color name="start_splash_screen">#8e27ab</color>
-  <color name="ring_logo_splash_screen">#873cc3</color>
+  <color name="color_main_background_gradient_start">#5508BE</color>
+  <color name="color_main_background_gradient_end">#8113A6</color>
+  <color name="ring_logo_splash_screen">#873CC3</color>
 </resources>

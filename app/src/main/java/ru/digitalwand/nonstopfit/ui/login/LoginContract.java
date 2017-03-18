@@ -16,13 +16,13 @@ public interface LoginContract {
 
     void loginSuccess(@NonNull LoginResponse loginResponse);
 
-    void loginIsEmpty();
+    void emailIsEmpty();
+
+    void emailIsInvalid();
 
     void passwordIsEmpty();
 
     void setButtonEnterEnable(boolean result);
-
-    void userNameIsInvalid();
   }
 
   interface Presenter {

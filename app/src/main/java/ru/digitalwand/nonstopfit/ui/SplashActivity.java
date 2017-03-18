@@ -10,7 +10,7 @@ import ru.digitalwand.nonstopfit.ui.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-  private static final long TIME_WAIT_STUB = 5000L;
+  private static final long TIME_WAIT_STUB = 0L;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

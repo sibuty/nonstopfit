@@ -2,19 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     >
 
-  <include layout="@layout/widget_toolbar" />
+  <include layout="@layout/widget_toolbar_simple" />
 
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:fillViewport="true"
-      >
-
-    <include layout="@layout/content_activity_login" />
-
-  </ScrollView>
+  <include layout="@layout/content_activity_login" />
 
 </LinearLayout>
