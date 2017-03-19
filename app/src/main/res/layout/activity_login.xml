@@ -9,6 +9,15 @@
 
   <include layout="@layout/widget_toolbar_simple" />
 
-  <include layout="@layout/content_activity_login" />
+  <ScrollView
+      android:id="@+id/sv_login_form"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      >
+
+    <include layout="@layout/content_activity_login" />
+
+  </ScrollView>
 
 </LinearLayout>
