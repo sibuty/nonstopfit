@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.data.provider.NetworkProvider;
+import ru.digitalwand.nonstopfit.data.provider.PreferencesManager;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.di.module.AppModule;
 import ru.digitalwand.nonstopfit.di.module.LoginWrapperModule;
@@ -22,6 +23,8 @@ public interface AppComponent {
   App app();
 
   NetworkProvider networkProvider();
+
+  PreferencesManager preferencesManager();
 
   LoginWrapper loginWrapper();
 }

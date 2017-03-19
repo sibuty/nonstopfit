@@ -2,10 +2,15 @@ package ru.digitalwand.nonstopfit.data.wrapper;
 
 import android.support.annotation.StringRes;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Credentials;
 import ru.digitalwand.nonstopfit.App;
+import ru.digitalwand.nonstopfit.BuildConfig;
 import ru.digitalwand.nonstopfit.R;
+import ru.digitalwand.nonstopfit.data.entity.AccessToken;
 import ru.digitalwand.nonstopfit.data.entity.Login;
-import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
 import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
 import ru.digitalwand.nonstopfit.data.entity.Sign;
 import ru.digitalwand.nonstopfit.data.entity.SignResponse;
@@ -33,8 +38,14 @@ public class LoginWrapper {
     return networkProvider.signUp(sign).flatMap(this::checkResponse);
   }
 
-  public Observable<LoginResponse> login(Login login) {
-    return networkProvider.login(login).flatMap(this::checkResponse);
+  public Observable<AccessToken> login(Login login) {
+    final Map<String, String> fields = new HashMap<>();
+    fields.put("grant_type", "password");
+    fields.put("username", login.userName);
+    fields.put("password", login.password);
+    return networkProvider
+        .login(Credentials.basic(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET), fields)
+        .flatMap(this::checkResponse);
   }
 
   public Observable<ResetPasswordResponse> resetPassword(User user) {
@@ -49,7 +60,7 @@ public class LoginWrapper {
     return RxBackgoroundWrapper.doInBackground(signUp(sign));
   }
 
-  public Observable<LoginResponse> wrappedLogin(Login login) {
+  public Observable<AccessToken> wrappedLogin(Login login) {
     return RxBackgoroundWrapper.doInBackground(login(login));
   }
 

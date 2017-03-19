@@ -1,8 +1,5 @@
 package ru.digitalwand.nonstopfit.ui.login;
 
-import android.support.annotation.NonNull;
-
-import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;
 
 /**
@@ -14,7 +11,7 @@ public interface LoginContract {
 
   interface View<T> extends BaseView<T> {
 
-    void loginSuccess(@NonNull LoginResponse loginResponse);
+    void startSmsApplyActivity();
 
     void emailIsEmpty();
 

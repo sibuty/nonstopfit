@@ -8,6 +8,7 @@ import ru.digitalwand.nonstopfit.di.component.DaggerAppComponent;
 import ru.digitalwand.nonstopfit.di.module.AppModule;
 import ru.digitalwand.nonstopfit.di.module.LoginWrapperModule;
 import ru.digitalwand.nonstopfit.di.module.NetworkProviderModule;
+import ru.digitalwand.nonstopfit.di.module.PreferencesManagerModule;
 
 /**
  * Created by Igor Goryainov
@@ -33,6 +34,7 @@ public class App extends Application {
     return DaggerAppComponent
         .builder()
         .appModule(new AppModule(this))
+        .preferencesManagerModule(new PreferencesManagerModule())
         .networkProviderModule(new NetworkProviderModule(BuildConfig.SERVER_URL))
         .loginWrapperModule(new LoginWrapperModule())
         .build();

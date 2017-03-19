@@ -26,7 +26,6 @@ import butterknife.OnLongClick;
 import butterknife.OnTextChanged;
 import ru.digitalwand.nonstopfit.R;
 import ru.digitalwand.nonstopfit.data.entity.Login;
-import ru.digitalwand.nonstopfit.data.entity.LoginResponse;
 import ru.digitalwand.nonstopfit.di.component.LoginActivityComponent;
 import ru.digitalwand.nonstopfit.di.module.LoginPresenterModule;
 import ru.digitalwand.nonstopfit.ui.base.HasComponentBaseActivity;
@@ -102,9 +101,8 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   }
 
   @Override
-  public void loginSuccess(@NonNull final LoginResponse loginResponse) {
-    Intent intent = new Intent(this, SmsApplyActivity.class);
-    startActivityForResult(intent, REQUEST_CODE_OPEN_SMS_APPLY);
+  public void startSmsApplyActivity() {
+    startActivityForResult(new Intent(this, SmsApplyActivity.class), REQUEST_CODE_OPEN_SMS_APPLY);
   }
 
   @Override

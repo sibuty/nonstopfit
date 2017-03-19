@@ -4,7 +4,14 @@ import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+
+import retrofit2.adapter.rxjava.HttpException;
+import ru.digitalwand.nonstopfit.R;
+import ru.digitalwand.nonstopfit.data.entity.AccessToken;
 import ru.digitalwand.nonstopfit.data.entity.Login;
+import ru.digitalwand.nonstopfit.data.provider.PreferencesManager;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BasePresenter;
 
@@ -20,9 +27,13 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
 
   @NonNull
   private final LoginWrapper loginWrapper;
+  @NonNull
+  private final PreferencesManager preferencesManager;
 
-  public LoginPresenter(@NonNull final LoginWrapper loginWrapper) {
+  public LoginPresenter(@NonNull final LoginWrapper loginWrapper,
+                        @NonNull final PreferencesManager preferencesManager) {
     this.loginWrapper = loginWrapper;
+    this.preferencesManager = preferencesManager;
   }
 
   @Override
@@ -31,11 +42,9 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
     checkNotNull(login);
     final LoginContract.View view = getView();
     if (verifyData(login, view)) {
-      addSubscription(loginWrapper.wrappedLogin(login).subscribe(view::loginSuccess, throwable -> {
-        throwable.printStackTrace();
-        view.showError(throwable.getMessage());
-        view.hideLoading();
-      }, view::hideLoading));
+      addSubscription(loginWrapper
+                          .wrappedLogin(login)
+                          .subscribe(this::onSuccess, this::onError, view::hideLoading));
     }
   }
 
@@ -70,5 +79,27 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
       result = false;
     }
     return result;
+  }
+
+  private void onSuccess(final AccessToken accessToken) {
+    preferencesManager.setAccessToken(accessToken);
+    getView().startSmsApplyActivity();
+  }
+
+  private void onError(final Throwable throwable) {
+    throwable.printStackTrace();
+    String message = null;
+    if (throwable instanceof HttpException) {
+      if (((HttpException) throwable).code() == HttpURLConnection.HTTP_BAD_REQUEST
+          || ((HttpException) throwable).code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+        message = getView().context().getString(R.string.error_login_and_password_incorrect);
+      }
+    } else if (throwable instanceof IOException) {
+      message = getView().context().getString(R.string.error_authorization_failed);
+    } else {
+      message = throwable.getMessage();
+    }
+    getView().showError(message);
+    getView().hideLoading();
   }
 }

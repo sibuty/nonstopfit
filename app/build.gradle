@@ -15,6 +15,9 @@ android {
     buildConfigField "String", "SIMPLE_DATE_FORMAT", "\"dd.MM.yyyy\""
     buildConfigField "String", "SMS_ADDRESS", "\"111\""
     buildConfigField "String", "MAIN_CONTROLLER", "\"/api/v1/\""
+    buildConfigField "String", "CLIENT_ID", "\"GDgVA08lNYBXxV8jMFFD2r0h3jRupdX44j60URc1\""
+    buildConfigField "String", "CLIENT_SECRET",
+        "\"9omEqncqNj62gzrCCgmcEvbVmc5zY8djiNpcyNApWOgWVox77Kd5Zu0RiMghuC0Rx6qG3hvW4AXYzs7CZjxj8bD2s10wmY6bF0X6fYoYLyYiRJNkoBWJTILFxGuTmgum\""
   }
 
   buildTypes {

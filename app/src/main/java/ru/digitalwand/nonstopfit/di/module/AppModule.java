@@ -11,7 +11,7 @@ import ru.digitalwand.nonstopfit.App;
  * skype - glotemz
  * on 28.02.2017 20:31.
  */
-@Module(includes = NetworkProviderModule.class)
+@Module(includes = { NetworkProviderModule.class, PreferencesManagerModule.class })
 public class AppModule {
 
   private final App app;
