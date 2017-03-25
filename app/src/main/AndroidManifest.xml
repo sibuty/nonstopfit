@@ -32,7 +32,8 @@
     <activity
         android:name=".ui.login.sign.SignActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.Main" />
+        android:theme="@style/AppTheme.Main"
+        android:windowSoftInputMode="adjustResize" />
     <activity
         android:name=".ui.login.reset.ResetActivity"
         android:screenOrientation="portrait"

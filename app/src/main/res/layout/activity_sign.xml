@@ -2,11 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     >
 
   <include layout="@layout/widget_toolbar_simple" />
 
-  <include layout="@layout/content_activity_sign" />
+  <ScrollView
+      android:id="@+id/sv_sign_form"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      >
+
+    <include layout="@layout/content_activity_sign" />
+
+  </ScrollView>
 
 </LinearLayout>

@@ -39,9 +39,10 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     checkNotNull(sign);
     final SignContract.View view = getView();
     if (verifyData(sign, view)) {
+      view.showLoading();
       addSubscription(loginWrapper
                           .wrappedSignUp(sign)
-                          .subscribe(this::onSuccess, this::onError, getView()::onSignSuccsess));
+                          .subscribe(this::onSuccess, this::onError, getView()::hideLoading));
     }
   }
 
@@ -123,5 +124,6 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
   private void onError(final Throwable throwable) {
     throwable.printStackTrace();
     getView().showError(throwable.getMessage());
+    getView().hideLoading();
   }
 }

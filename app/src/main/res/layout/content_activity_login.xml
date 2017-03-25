@@ -90,15 +90,6 @@
           android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
           />
 
-      <Button
-          android:id="@+id/b_skip"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:text="@string/button_skip"
-          android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-          />
-
     </LinearLayout>
 
     <Button

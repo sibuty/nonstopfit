@@ -9,10 +9,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class SignResponse {
 
-  @JsonProperty("username")
-  public String userName;
+  @JsonProperty("first_name")
+  public String fistname;
+  @JsonProperty("last_name")
+  public String surname;
+  @JsonProperty("phone")
+  public String phone;
   @JsonProperty("email")
   public String email;
   @JsonProperty("password")
   public String password;
+  @JsonProperty("date_birthday")
+  public long dateBirthday;
+  @JsonProperty("sex")
+  public int gender;
 }

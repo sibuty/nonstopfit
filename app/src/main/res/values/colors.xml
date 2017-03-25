@@ -11,4 +11,6 @@
   <color name="color_main_background_gradient_start">#5508BE</color>
   <color name="color_main_background_gradient_end">#8113A6</color>
   <color name="ring_logo_splash_screen">#873CC3</color>
+  <color name="disable_alpha">#66AAAAAA</color>
+  <color name="disable">#AAAAAA</color>
 </resources>

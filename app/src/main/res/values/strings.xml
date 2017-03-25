@@ -31,7 +31,7 @@
   <string name="hint_birthday">Дата рождения</string>
   <string name="hint_confirm_password">Повторите пароль</string>
   <string name="hint_email">Email адресс</string>
-  <string name="hint_firstname">Имя</string>
+  <string name="hint_firstname">Ваше имя</string>
   <string name="hint_login">Имя</string>
   <string name="hint_login_or_mail">Имя или Email</string>
   <string name="hint_password">Пароль</string>
@@ -62,4 +62,5 @@
   <string name="title_reset">Восстановление пароля</string>
   <string name="title_sign_up">Регистрация</string>
   <string name="title_sms_apply">Поддтверждение по смс</string>
+  <string name="message_signing_user">Регистрация пользователя</string>
 </resources>

@@ -1,6 +1,5 @@
 package ru.digitalwand.nonstopfit.ui.login.sign;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -11,22 +10,19 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 import butterknife.OnItemSelected;
 import butterknife.OnTextChanged;
 import icepick.State;
@@ -35,6 +31,8 @@ import ru.digitalwand.nonstopfit.data.entity.Sign;
 import ru.digitalwand.nonstopfit.di.component.SignActivityComponent;
 import ru.digitalwand.nonstopfit.di.module.SignPresenterModule;
 import ru.digitalwand.nonstopfit.ui.base.HasComponentBaseActivity;
+import ru.digitalwand.nonstopfit.ui.widget.DateEditText;
+import ru.digitalwand.nonstopfit.util.ProgressDialogHelper;
 
 /**
  * Created by Igor Goryainov
@@ -76,8 +74,8 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
 
   @BindView(R.id.til_birthday)
   protected TextInputLayout tilBirthday;
-  @BindView(R.id.et_birthday)
-  protected EditText etBirthday;
+  @BindView(R.id.det_birthday)
+  protected DateEditText detBirthday;
 
   @BindView(R.id.rg_gender)
   protected RadioGroup rgGender;
@@ -85,8 +83,13 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   @BindView(R.id.s_city)
   protected AppCompatSpinner sCity;
 
+  @BindView(R.id.sv_sign_form)
+  protected ScrollView svSignForm;
+
   @Inject
   protected SignPresenter presenter;
+  @Inject
+  protected ProgressDialogHelper progressDialogHelper;
   @State
   protected Date birthday;
   @State
@@ -122,16 +125,19 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     etPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+    detBirthday.setOnDateChangeListener(date -> this.birthday = date);
     rgGender.setOnCheckedChangeListener(this::onGenderSelect);
     initCitySpinner();
     ready = true;
     presenter.attachView(this);
+    progressDialogHelper.create(this, R.string.message_signing_user);
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
     presenter.detachView();
+    progressDialogHelper.onDestroy();
   }
 
   @Override
@@ -146,10 +152,12 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
 
   @Override
   public void showLoading() {
+    progressDialogHelper.show();
   }
 
   @Override
   public void hideLoading() {
+    progressDialogHelper.hide();
   }
 
   @Override
@@ -159,7 +167,6 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
 
   @Override
   public void onSignSuccsess() {
-
   }
 
   @Override
@@ -223,16 +230,43 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
                     etPassword.getText().toString(),
                     etPasswordConfirm.getText().toString(),
                     dateBirthday,
-                    gender.getTitle(),
+                    gender.getId(),
                     city);
   }
 
   @OnClick(R.id.b_sign_up)
   protected void onSignUpClick() {
     presenter.setData(getSign());
-    presenter.setBirthdayDate(etBirthday.getText().toString());
+    presenter.setBirthdayDate(detBirthday.getText().toString());
     presenter.signUp();
   }
+
+  /*@OnClick(value = {
+      R.id.et_firstname, R.id.et_surname, R.id.et_phone, R.id.et_email, R.id.et_password,
+      R.id.et_password_confirm
+  })
+  protected void onClickField(final View view) {
+    onFocusChanged(view, true);
+  }
+
+  @OnFocusChange(value = {
+      R.id.et_firstname, R.id.et_surname, R.id.et_phone, R.id.et_email, R.id.et_password,
+      R.id.et_password_confirm
+  })
+  protected void onFocusChanged(final View view, final boolean focused) {
+    if (focused) {
+      final int[] viewXY = new int[2];
+      view.getLocationOnScreen(viewXY);
+      final int scrollViewY = (int) (svSignForm.getScrollY() * 2.6);
+      final int viewY = viewXY[1];
+      final int different = scrollViewY - viewY;
+      if (different != 0) {
+        final int delta = 75;
+        final int resultY = (int) ((different > 0 ? viewY - delta : viewY + delta) / 2.6);
+        svSignForm.postDelayed(() -> svSignForm.smoothScrollTo(0, resultY), 300L);
+      }
+    }
+  }*/
 
   @OnTextChanged(value = R.id.et_firstname, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
   protected void onFirstnameChanged(final Editable editable) {
@@ -271,37 +305,13 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
     }
   }
 
-  @OnTextChanged(value = { R.id.et_birthday }, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+  @OnTextChanged(value = { R.id.det_birthday },
+      callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
   protected void onBirthdayChanged(final Editable editable) {
     final String date = editable.toString();
     if (date.length() == 10 && presenter.verifyBirthdayDate(date)) {
       tilBirthday.setError(null);
     }
-  }
-
-  @OnClick(R.id.et_birthday)
-  protected void onDateClick() {
-    onDateChanged(true);
-  }
-
-  @OnFocusChange(R.id.et_birthday)
-  protected void onDateChanged(final boolean focused) {
-    if (focused) {
-      final Calendar c = Calendar.getInstance();
-      final int year = c.get(Calendar.YEAR);
-      final int month = c.get(Calendar.MONTH);
-      final int day = c.get(Calendar.DAY_OF_MONTH);
-      new DatePickerDialog(this, this::onDateSet, year, month, day).show();
-    }
-  }
-
-  private void onDateSet(final DatePicker view, final int year, final int month, final int day) {
-    final Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, year);
-    c.set(Calendar.MONTH, month);
-    c.set(Calendar.DAY_OF_MONTH, day);
-    birthday = c.getTime();
-    etBirthday.setText(DateFormatUtils.format(c, "dd.MM.yyyy"));
   }
 
   private void onGenderSelect(final RadioGroup radioGroup, @IdRes final int checkedId) {

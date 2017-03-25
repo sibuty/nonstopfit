@@ -1,6 +1,7 @@
 <resources>
 
   <style name="Button" parent="Widget.AppCompat.Button">
+    <item name="android:textColor">@android:color/white</item>
     <item name="android:background">@drawable/selector_button_default</item>
   </style>
 
@@ -18,4 +19,13 @@
     <item name="titleMarginStart">0dp</item>
     <item name="titleMarginEnd">0dp</item>
   </style>
+
+  <style name="DatePicker" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorControlNormal">@android:color/white</item>
+    <item name="colorControlActivated">@color/color_accent</item>
+    <item name="colorAccent">@color/color_accent</item>
+    <item name="android:textColorPrimary">@android:color/white</item>
+    <item name="android:windowBackground">@drawable/date_picker_background</item>
+  </style>
+
 </resources>

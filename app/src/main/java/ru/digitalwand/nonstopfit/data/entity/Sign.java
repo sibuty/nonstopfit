@@ -6,12 +6,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by Igor Goryainov
  * skype - glotemz
  * on 28.02.2017 22:07.
+ *
+ * {
+ * "first_name": "first_name",
+ * "last_name": "last_name",
+ * "email": "email",
+ * "phone": "phone",
+ * "password": "password/md5",
+ * "password_confirm": "password/md5",
+ * "sex": 0(Male) or 1(Female)
+ * }
  */
 public class Sign {
 
-  @JsonProperty("username")
+  @JsonProperty("first_name")
   public String fistname;
-  @JsonProperty("surname")
+  @JsonProperty("last_name")
   public String surname;
   @JsonProperty("phone")
   public String phone;
@@ -23,8 +33,8 @@ public class Sign {
   public String passwordConfirm;
   @JsonProperty("date_birthday")
   public long dateBirthday;
-  @JsonProperty("gender")
-  public String gender;
+  @JsonProperty("sex")
+  public int gender;
   @JsonProperty("city")
   public String city;
 
@@ -35,7 +45,7 @@ public class Sign {
               String password,
               String passwordConfirm,
               long dateBirthday,
-              String gender,
+              int gender,
               String city) {
     this.fistname = fistname;
     this.surname = surname;
@@ -49,12 +59,18 @@ public class Sign {
   }
 
   public enum Gender {
-    MALE("Мужчина"), FEMALE("Женища"), NO_MATTER("Не важно");
+    MALE(0, "Мужчина"), FEMALE(1, "Женщина"), NO_MATTER(-1, "Не важно");
 
+    private final int id;
     private final String title;
 
-    Gender(final String title) {
+    Gender(final int id, final String title) {
+      this.id = id;
       this.title = title;
+    }
+
+    public int getId() {
+      return id;
     }
 
     public String getTitle() {
