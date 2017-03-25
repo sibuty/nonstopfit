@@ -1,16 +1,13 @@
 package ru.digitalwand.nonstopfit.data.provider;
 
-import java.util.Map;
-
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import ru.digitalwand.nonstopfit.BuildConfig;
 import ru.digitalwand.nonstopfit.data.entity.AccessToken;
+import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
 import ru.digitalwand.nonstopfit.data.entity.Sign;
 import ru.digitalwand.nonstopfit.data.entity.SignResponse;
@@ -28,10 +25,9 @@ public interface NetworkProvider {
   @POST(BuildConfig.MAIN_CONTROLLER + "sign-up/")
   Observable<SignResponse> signUp(@Body Sign sign);
 
-  @FormUrlEncoded
   @POST(BuildConfig.MAIN_CONTROLLER + "login/")
   Observable<AccessToken> login(@Header(AuthenticationInterceptor.HEADER_KEY) String basicToken,
-                                @FieldMap Map<String, String> fields);
+                                @Body Login login);
 
   @POST(BuildConfig.MAIN_CONTROLLER + "sendPassword-password/")
   Observable<ResetPasswordResponse> resetPassword(@Body User user);

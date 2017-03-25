@@ -2,9 +2,6 @@ package ru.digitalwand.nonstopfit.data.wrapper;
 
 import android.support.annotation.StringRes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import okhttp3.Credentials;
 import ru.digitalwand.nonstopfit.App;
 import ru.digitalwand.nonstopfit.BuildConfig;
@@ -39,12 +36,8 @@ public class LoginWrapper {
   }
 
   public Observable<AccessToken> login(Login login) {
-    final Map<String, String> fields = new HashMap<>();
-    fields.put("grant_type", "password");
-    fields.put("username", login.userName);
-    fields.put("password", login.password);
     return networkProvider
-        .login(Credentials.basic(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET), fields)
+        .login(Credentials.basic(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET), login)
         .flatMap(this::checkResponse);
   }
 
