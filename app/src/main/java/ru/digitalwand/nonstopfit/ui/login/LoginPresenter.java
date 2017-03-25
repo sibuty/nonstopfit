@@ -42,6 +42,7 @@ public class LoginPresenter extends BasePresenter<Login, LoginContract.View<Logi
     checkNotNull(login);
     final LoginContract.View view = getView();
     if (verifyData(login, view)) {
+      view.showLoading();
       addSubscription(loginWrapper
                           .wrappedLogin(login)
                           .subscribe(this::onSuccess, this::onError, view::hideLoading));

@@ -32,6 +32,7 @@ import ru.digitalwand.nonstopfit.ui.base.HasComponentBaseActivity;
 import ru.digitalwand.nonstopfit.ui.login.reset.ResetActivity;
 import ru.digitalwand.nonstopfit.ui.login.sign.SignActivity;
 import ru.digitalwand.nonstopfit.ui.login.sms.SmsApplyActivity;
+import ru.digitalwand.nonstopfit.util.ProgressDialogHelper;
 
 /**
  * Created by Igor Goryainov
@@ -59,6 +60,8 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   protected Button bEnter;
   @Inject
   protected LoginPresenter presenter;
+  @Inject
+  protected ProgressDialogHelper progressDialogHelper;
   private boolean ready;
 
   @Override
@@ -87,12 +90,14 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
     super.onCreate(savedInstanceState);
     ready = true;
     presenter.attachView(this);
+    progressDialogHelper.create(this, R.string.message_authorization);
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
     presenter.detachView();
+    progressDialogHelper.onDestroy();
   }
 
   @Override
@@ -140,12 +145,12 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
 
   @Override
   public void showLoading() {
-
+    progressDialogHelper.show();
   }
 
   @Override
   public void hideLoading() {
-
+    progressDialogHelper.hide();
   }
 
   @Override

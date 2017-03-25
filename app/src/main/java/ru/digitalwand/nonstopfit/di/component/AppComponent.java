@@ -15,9 +15,13 @@ import ru.digitalwand.nonstopfit.data.provider.PreferencesManager;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.di.module.AppModule;
 import ru.digitalwand.nonstopfit.di.module.LoginWrapperModule;
+import ru.digitalwand.nonstopfit.di.module.ProgressDialogHelperModule;
+import ru.digitalwand.nonstopfit.util.ProgressDialogHelper;
 
 @Singleton
-@Component(modules = { AppModule.class, LoginWrapperModule.class })
+@Component(modules = {
+    AppModule.class, LoginWrapperModule.class, ProgressDialogHelperModule.class
+})
 public interface AppComponent {
 
   App app();
@@ -27,4 +31,6 @@ public interface AppComponent {
   PreferencesManager preferencesManager();
 
   LoginWrapper loginWrapper();
+
+  ProgressDialogHelper progressDialogHelper();
 }

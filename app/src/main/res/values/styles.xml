@@ -1,16 +1,21 @@
 <resources>
 
-  <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
-    <item name="titleMarginStart">0dp</item>
-    <item name="titleMarginEnd">0dp</item>
-  </style>
-
   <style name="Button" parent="Widget.AppCompat.Button">
     <item name="android:background">@drawable/selector_button_default</item>
   </style>
 
-  <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
-
+  <style name="ProgressDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorAccent">@android:color/white</item>
+    <item name="android:background">@color/color_accent</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:fitsSystemWindows">false</item>
+    <item name="android:clipToPadding">false</item>
   </style>
 
+  <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton" />
+
+  <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+    <item name="titleMarginStart">0dp</item>
+    <item name="titleMarginEnd">0dp</item>
+  </style>
 </resources>
