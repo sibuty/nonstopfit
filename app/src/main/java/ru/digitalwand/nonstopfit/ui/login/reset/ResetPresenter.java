@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 
+import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
 import ru.digitalwand.nonstopfit.data.entity.User;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BasePresenter;
@@ -33,11 +34,18 @@ public class ResetPresenter extends BasePresenter<User, ResetContract.View<User>
     if (verifyData(user, view)) {
       addSubscription(loginWrapper
                           .wrappedResetPassword(user)
-                          .subscribe(view::passwordWasSent, throwable -> {
-                            throwable.printStackTrace();
-                            view.showError(throwable.getMessage());
-                          }));
+                          .subscribe(this::onSuccess, this::onError, getView()::hideLoading));
     }
+  }
+
+  private void onSuccess(final ResetPasswordResponse resetPasswordResponse) {
+    getView().showResetSuccessForm();
+  }
+
+  private void onError(final Throwable throwable) {
+    throwable.printStackTrace();
+    getView().showError(throwable.getMessage());
+    getView().hideLoading();
   }
 
   @Override

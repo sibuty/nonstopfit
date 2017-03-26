@@ -103,6 +103,18 @@ public class LoginActivity extends HasComponentBaseActivity<LoginActivityCompone
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
+    switch (resultCode) {
+      case RESULT_OK:
+        switch (requestCode) {
+          case REQUEST_CODE_OPEN_SIGN_UP:
+            startSmsApplyActivity();
+            finish();
+            break;
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   @Override

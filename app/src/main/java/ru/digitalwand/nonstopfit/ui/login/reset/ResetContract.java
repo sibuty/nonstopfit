@@ -1,6 +1,5 @@
 package ru.digitalwand.nonstopfit.ui.login.reset;
 
-import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;
 
 /**
@@ -11,7 +10,7 @@ import ru.digitalwand.nonstopfit.ui.base.mvp.BaseView;
 public interface ResetContract {
 
   interface View<T> extends BaseView<T> {
-    void passwordWasSent(ResetPasswordResponse response);
+    void showResetSuccessForm();
 
     void fieldIsEmpty();
 

@@ -5,14 +5,20 @@ import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import retrofit2.adapter.rxjava.HttpException;
 import ru.digitalwand.nonstopfit.BuildConfig;
 import ru.digitalwand.nonstopfit.R;
+import ru.digitalwand.nonstopfit.data.entity.AccessToken;
+import ru.digitalwand.nonstopfit.data.entity.Login;
 import ru.digitalwand.nonstopfit.data.entity.Sign;
 import ru.digitalwand.nonstopfit.data.entity.SignResponse;
+import ru.digitalwand.nonstopfit.data.provider.PreferencesManager;
 import ru.digitalwand.nonstopfit.data.wrapper.LoginWrapper;
 import ru.digitalwand.nonstopfit.ui.base.mvp.BasePresenter;
 
@@ -28,9 +34,15 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
 
   @NonNull
   private final LoginWrapper loginWrapper;
+  @NonNull
+  private final PreferencesManager preferencesManager;
+  private boolean isSignSuccess;
+  private SignResponse signResponse;
 
-  public SignPresenter(@NonNull final LoginWrapper loginWrapper) {
+  public SignPresenter(@NonNull final LoginWrapper loginWrapper,
+                       @NonNull final PreferencesManager preferencesManager) {
     this.loginWrapper = loginWrapper;
+    this.preferencesManager = preferencesManager;
   }
 
   @Override
@@ -40,9 +52,13 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
     final SignContract.View view = getView();
     if (verifyData(sign, view)) {
       view.showLoading();
-      addSubscription(loginWrapper
-                          .wrappedSignUp(sign)
-                          .subscribe(this::onSuccess, this::onError, getView()::hideLoading));
+      if (!isSignSuccess) {
+        addSubscription(loginWrapper
+                            .wrappedSignUp(sign)
+                            .subscribe(this::onSuccess, this::onError, getView()::hideLoading));
+      } else {
+        authorizateUser(signResponse);
+      }
     }
   }
 
@@ -118,12 +134,46 @@ public class SignPresenter extends BasePresenter<Sign, SignContract.View<Sign>>
   }
 
   private void onSuccess(final SignResponse response) {
-    getView().onSignSuccsess();
+    this.isSignSuccess = true;
+    this.signResponse = response;
+    getView().showSignSuccsessForm();
   }
 
   private void onError(final Throwable throwable) {
     throwable.printStackTrace();
-    getView().showError(throwable.getMessage());
+    final String message = throwable instanceof IOException ? getView()
+        .context()
+        .getString(R.string.error_sign_was_failed) : throwable.getMessage();
+    getView().showError(message);
+    getView().hideLoading();
+  }
+
+  private void authorizateUser(final SignResponse response) {
+    addSubscription(loginWrapper
+                        .wrappedLogin(new Login(response.email, response.password))
+                        .subscribe(this::onGotAccessToken,
+                                   this::onAuthorizationFailed,
+                                   getView()::hideLoading));
+  }
+
+  private void onGotAccessToken(final AccessToken accessToken) {
+    preferencesManager.setAccessToken(accessToken);
+  }
+
+  private void onAuthorizationFailed(final Throwable throwable) {
+    throwable.printStackTrace();
+    String message = null;
+    if (throwable instanceof HttpException) {
+      if (((HttpException) throwable).code() == HttpURLConnection.HTTP_BAD_REQUEST
+          || ((HttpException) throwable).code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+        message = getView().context().getString(R.string.error_login_and_password_incorrect);
+      }
+    } else if (throwable instanceof IOException) {
+      message = getView().context().getString(R.string.error_authorization_failed);
+    } else {
+      message = throwable.getMessage();
+    }
+    getView().showError(message);
     getView().hideLoading();
   }
 }

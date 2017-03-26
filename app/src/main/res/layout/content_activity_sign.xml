@@ -190,15 +190,6 @@
           android:text="@string/radio_button_gender_female"
           />
 
-      <android.support.v7.widget.AppCompatRadioButton
-          android:id="@+id/arb_no_matter"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:checked="true"
-          android:text="@string/radio_button_gender_no_matter"
-          />
-
     </RadioGroup>
 
     <android.support.v7.widget.AppCompatSpinner

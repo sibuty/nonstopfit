@@ -11,7 +11,7 @@ public interface SignContract {
 
   interface View<T> extends BaseView<T> {
 
-    void onSignSuccsess();
+    void showSignSuccsessForm();
 
     void errorFirstnameIsEmpty();
 
@@ -32,6 +32,8 @@ public interface SignContract {
     void errorCityIsNotSelected();
 
     void errorDateIsInvalid();
+
+    void closeAndSendSmsApplyResult();
   }
 
   interface Presenter {

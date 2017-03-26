@@ -12,6 +12,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import java.util.Calendar;
 import java.util.Date;
 
+import ru.digitalwand.nonstopfit.R;
+
 /**
  * Created by Igor Goryainov
  * skype - glotemz
@@ -57,7 +59,12 @@ public class DateEditText extends android.support.v7.widget.AppCompatEditText {
 
   public void showDatePicker() {
     final int[] date = getYearMouthDay();
-    new DatePickerDialog(getContext(), this::onDateSet, date[0], date[1], date[2]).show();
+    new DatePickerDialog(getContext(),
+                         R.style.DatePicker,
+                         this::onDateSet,
+                         date[0],
+                         date[1],
+                         date[2]).show();
   }
 
   private void onDateSet(final DatePicker view, final int year, final int month, final int day) {

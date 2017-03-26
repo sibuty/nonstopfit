@@ -1,6 +1,7 @@
 package ru.digitalwand.nonstopfit.ui.login.sign;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -41,6 +43,8 @@ import ru.digitalwand.nonstopfit.util.ProgressDialogHelper;
  */
 public class SignActivity extends HasComponentBaseActivity<SignActivityComponent>
     implements SignContract.View<Sign> {
+
+  public static final String EXTRA_OPEN_SMS_APPLY = "extra_open_sms_apply";
 
   @BindView(R.id.til_firstname)
   protected TextInputLayout tilFirstname;
@@ -86,6 +90,9 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   @BindView(R.id.sv_sign_form)
   protected ScrollView svSignForm;
 
+  @BindView(R.id.sv_sign_form_success)
+  protected ScrollView svSignFormSuccess;
+
   @Inject
   protected SignPresenter presenter;
   @Inject
@@ -97,6 +104,8 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   protected Sign.Gender gender = Sign.Gender.NO_MATTER;
   @State
   protected String city;
+  @State
+  protected boolean isSignSuccess;
   private boolean ready;
 
   @Override
@@ -128,16 +137,17 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
     detBirthday.setOnDateChangeListener(date -> this.birthday = date);
     rgGender.setOnCheckedChangeListener(this::onGenderSelect);
     initCitySpinner();
+    chooseVisibleForm(isSignSuccess);
+    progressDialogHelper.create(this, R.string.message_signing_user);
     ready = true;
     presenter.attachView(this);
-    progressDialogHelper.create(this, R.string.message_signing_user);
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    presenter.detachView();
     progressDialogHelper.onDestroy();
+    presenter.detachView();
   }
 
   @Override
@@ -166,7 +176,9 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
   }
 
   @Override
-  public void onSignSuccsess() {
+  public void showSignSuccsessForm() {
+    this.isSignSuccess = true;
+    chooseVisibleForm(true);
   }
 
   @Override
@@ -220,6 +232,19 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
     tilBirthday.setError(getString(R.string.error_date_is_invalid));
   }
 
+  @Override
+  public void closeAndSendSmsApplyResult() {
+    final Intent intent = new Intent();
+    intent.putExtra(EXTRA_OPEN_SMS_APPLY, true);
+    setResult(RESULT_OK);
+    finish();
+  }
+
+  private void chooseVisibleForm(final boolean success) {
+    svSignForm.setVisibility(success ? View.GONE : View.VISIBLE);
+    svSignFormSuccess.setVisibility(success ? View.VISIBLE : View.GONE);
+  }
+
   @NonNull
   protected Sign getSign() {
     final long dateBirthday = birthday == null ? 0L : birthday.getTime();
@@ -239,6 +264,11 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
     presenter.setData(getSign());
     presenter.setBirthdayDate(detBirthday.getText().toString());
     presenter.signUp();
+  }
+
+  @OnClick(R.id.b_after_sign_success)
+  protected void onAfterSignSuccess() {
+    closeAndSendSmsApplyResult();
   }
 
   /*@OnClick(value = {
@@ -321,9 +351,6 @@ public class SignActivity extends HasComponentBaseActivity<SignActivityComponent
         break;
       case R.id.arb_female:
         gender = Sign.Gender.FEMALE;
-        break;
-      case R.id.arb_no_matter:
-        gender = Sign.Gender.NO_MATTER;
         break;
     }
   }

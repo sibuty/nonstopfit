@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,12 +19,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
+import icepick.State;
 import ru.digitalwand.nonstopfit.R;
-import ru.digitalwand.nonstopfit.data.entity.ResetPasswordResponse;
 import ru.digitalwand.nonstopfit.data.entity.User;
 import ru.digitalwand.nonstopfit.di.component.ResetActivityComponent;
 import ru.digitalwand.nonstopfit.di.module.ResetPresenterModule;
 import ru.digitalwand.nonstopfit.ui.base.HasComponentBaseActivity;
+import ru.digitalwand.nonstopfit.util.ProgressDialogHelper;
 
 /**
  * Created by Igor Goryainov
@@ -37,8 +39,16 @@ public class ResetActivity extends HasComponentBaseActivity<ResetActivityCompone
   protected TextInputLayout tilField;
   @BindView(R.id.et_field)
   protected EditText etField;
+  @BindView(R.id.ll_reset_form)
+  protected View llResetForm;
+  @BindView(R.id.ll_reset_form_success)
+  protected View llResetFormSucess;
   @Inject
   protected ResetPresenter presenter;
+  @Inject
+  protected ProgressDialogHelper progressDialogHelper;
+  @State
+  protected boolean isResetSuccess;
   private boolean ready;
 
   @Override
@@ -66,6 +76,7 @@ public class ResetActivity extends HasComponentBaseActivity<ResetActivityCompone
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    chooseResetForm(isResetSuccess);
     ready = true;
     presenter.attachView(this);
   }
@@ -73,6 +84,7 @@ public class ResetActivity extends HasComponentBaseActivity<ResetActivityCompone
   @Override
   protected void onDestroy() {
     super.onDestroy();
+    progressDialogHelper.onDestroy();
     presenter.detachView();
   }
 
@@ -88,12 +100,12 @@ public class ResetActivity extends HasComponentBaseActivity<ResetActivityCompone
 
   @Override
   public void showLoading() {
-
+    progressDialogHelper.show();
   }
 
   @Override
   public void hideLoading() {
-
+    progressDialogHelper.hide();
   }
 
   @Override
@@ -102,8 +114,9 @@ public class ResetActivity extends HasComponentBaseActivity<ResetActivityCompone
   }
 
   @Override
-  public void passwordWasSent(ResetPasswordResponse response) {
-
+  public void showResetSuccessForm() {
+    this.isResetSuccess = true;
+    chooseResetForm(true);
   }
 
   @Override
@@ -122,14 +135,24 @@ public class ResetActivity extends HasComponentBaseActivity<ResetActivityCompone
     return fieldValue.contains("@") ? new User(null, fieldValue) : new User(fieldValue, null);
   }
 
+  private void chooseResetForm(final boolean success) {
+    llResetForm.setVisibility(success ? View.GONE : View.VISIBLE);
+    llResetFormSucess.setVisibility(success ? View.VISIBLE : View.GONE);
+  }
+
   @OnClick(R.id.b_send_password)
   protected void onSendPasswordClick() {
     presenter.setData(getUser());
     presenter.sendPassword();
   }
 
+  @OnClick(R.id.b_after_reset_success)
+  protected void onAfterResetSuccess() {
+    finish();
+  }
+
   @OnEditorAction(R.id.et_field)
-  protected boolean onDoneAction(int actionId) {
+  protected boolean onDoneAction(final int actionId) {
     if (actionId == EditorInfo.IME_ACTION_DONE) {
       onSendPasswordClick();
       return true;

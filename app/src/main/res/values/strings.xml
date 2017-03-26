@@ -63,4 +63,12 @@
   <string name="title_sign_up">Регистрация</string>
   <string name="title_sms_apply">Поддтверждение по смс</string>
   <string name="message_signing_user">Регистрация пользователя</string>
+  <string name="text_sign_was_success">Регистрация прошла успешно!</string>
+  <string name="text_sign_use_app">Теперь вы можете пользоваться всеми возможностями приложения</string>
+  <string name="button_run_app">Запустить приложение</string>
+  <string name="text_reset_password_description">Введите указанный при регистрации e-mail, на него будет отправлено письмо с кодом подтверждения</string>
+  <string name="button_after_reset_success">Хорошо</string>
+  <string name="text_after_reset_success_description">Инструкция по изменению пароля отправлена на указанный телефон\\email при регитсрации</string>
+  <string name="text_after_reset_success_title">Пароль отправлен!</string>
+  <string name="error_sign_was_failed">Ошибка регитсрации, проверьте интернет соединение</string>
 </resources>

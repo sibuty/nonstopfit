@@ -20,4 +20,16 @@
 
   </ScrollView>
 
+  <ScrollView
+      android:id="@+id/sv_sign_form_success"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      android:visibility="gone"
+      >
+
+    <include layout="@layout/content_activity_sign_success" />
+
+  </ScrollView>
+
 </LinearLayout>
